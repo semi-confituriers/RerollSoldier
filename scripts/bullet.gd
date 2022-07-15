@@ -1,4 +1,4 @@
-extends StaticBody
+extends Area
 
 var speed_vec = Vector3.ZERO
 
@@ -17,3 +17,11 @@ func _process(delta):
 	self.translation += speed_vec * delta
 	if abs(self.translation.x) > 100 || abs(self.translation.y) > 100:
 		self.queue_free()
+
+
+func _on_Bullet_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	print("_on_Bullet_body_shape_entered", body)
+	if(body.name == "Player"):
+		self.disconnect("area_shape_entered", self, "_on_Bullet_body_shape_entered")
+		self.queue_free()
+	pass # Replace with function body.
