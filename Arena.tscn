@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/PlayerKinBody.gd" type="Script" id=1]
 [ext_resource path="res://res/floor.tres" type="Material" id=2]
+[ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=3]
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 20, 2, 20 )
@@ -14,7 +15,7 @@ size = Vector2( 40, 40 )
 
 [sub_resource type="CubeMesh" id=2]
 
-[node name="Spatial" type="Spatial"]
+[node name="Arena" type="Spatial"]
 
 [node name="StaticBody" type="StaticBody" parent="."]
 
@@ -40,3 +41,6 @@ material/0 = null
 [node name="PlayerCamera" type="Camera" parent="PlayerKinBody"]
 transform = Transform( 1, 0, 0, 0, 0.473151, 0.880982, 0, -0.880982, 0.473151, 0, 14.0383, 9.32242 )
 size = 20.0
+
+[node name="Enemy" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.049, 0, -9.699 )
