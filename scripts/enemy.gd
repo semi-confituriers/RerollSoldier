@@ -23,7 +23,7 @@ func _process(delta):
 	cnt += delta
 	if cnt > next_cnt:
 		random_move()
-		fire_bullet(get_node("/root/Game/LevelCont/Level/Player").translation, 20)
+		fire_bullet(get_node("/root/Game/LevelCont/Level/Player").translation, 15)
 		cnt = 0
 		next_cnt = rand_range(3, 4)
 		
@@ -77,7 +77,7 @@ func random_move():
 #			break
 
 func fire_bullet(target: Vector3, speed: float):
-	print("enemy-fire: ", self.translation, "->", target)
+#	print("enemy-fire: ", self.translation, "->", target)
 	var bullet = load("res://scenes/bullet.tscn").instance()
 	get_node("/root/Game/LevelCont/Level").add_child(bullet)
 	bullet.fire(self.translation, target, speed, true) 

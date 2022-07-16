@@ -1,7 +1,7 @@
 extends KinematicBody
 
-var walk_speed: float = 8
-var roll_speed: float = 13
+var walk_speed: float = 6
+var roll_speed: float = 10
 const AFTER_ROLL_DELAY: float = 0.3
 
 
