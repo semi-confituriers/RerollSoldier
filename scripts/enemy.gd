@@ -5,6 +5,7 @@ var cnt: float = 0
 var next_cnt: float = 3
 var randwalk_dist: float = 20
 var can_fire = true
+export var hitpoints = 2
 
 enum MobType {
 	Shooter, # Walks randomly, shoots bullets
@@ -83,5 +84,14 @@ func fire_bullet(target: Vector3, speed: float):
 	bullet.fire(self.translation, target, speed, true) 
 
 # Called by bullet.gd
-func on_bullet_hit(_hit_dir: Vector3):
-	self.queue_free()
+func on_hit(dmg: int, _hit_dir: Vector3):
+	
+	hitpoints -= dmg
+	if hitpoints > 0:
+		$HitSound.play()
+	else:
+		$DeathSound.play()
+		self.hide()
+		yield($DeathSound, "finished")
+		self.queue_free()
+	
