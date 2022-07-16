@@ -37,7 +37,7 @@ func spawn():
 				var spawn_point = spawn_points[randi() % spawn_points.size()]
 				
 				var mob = mob_scene.instance()
-				get_node("/root/Arena/Enemies").add_child(mob)
+				get_node("/root/Game/LevelCont/Level/Enemies").add_child(mob)
 				mob.set_translation(
 					spawn_point.get_translation()
 					 + Vector3(rand_range(-1, 1), 0, rand_range(-1, 1))

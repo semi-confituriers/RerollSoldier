@@ -79,7 +79,7 @@ func fire(type: String, color: Color = Color.red):
 			for i in range(0, 4):
 				var this_dir = dir.rotated(Vector3.UP, i * PI/2)
 				var bullet: Spatial = load("res://scenes/bullet.tscn").instance()
-				get_node("/root/Arena").add_child(bullet)
+				get_node("/root/Game/LevelCont/Level").add_child(bullet)
 				
 				var from = self.translation
 #				var from = self.global_transform.origin
@@ -90,7 +90,7 @@ func fire(type: String, color: Color = Color.red):
 			var target = self.translation + dir * 5.0
 			
 			var aoe = load("res://scenes/aoe.tscn").instance()
-			get_node("/root/Arena").add_child(aoe)
+			get_node("/root/Game/LevelCont/Level").add_child(aoe)
 #			aoe.translation = target
 			aoe.translation = self.translation
 			aoe.configure(4, 1, Color.blue, false);
