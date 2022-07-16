@@ -7,6 +7,8 @@ export var fall_acceleration = 75
 
 var velocity = Vector3.ZERO
 
+var can_fire = true
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,19 +20,20 @@ func _physics_process(delta):
 
 	# We check for each move input and update the direction accordingly.
 	if Input.is_action_pressed("move_right"):
-		print("move_right")
 		direction.x += 1
 	if Input.is_action_pressed("move_left"):
-		print("move_left")
 		direction.x -= 1
 	if Input.is_action_pressed("move_down"):
-		# Notice how we are working with the vector's x and z axes.
-		# In 3D, the XZ plane is the ground plane.
-		print("move_down")
 		direction.z += 1
 	if Input.is_action_pressed("move_up"):
-		print("move_up")
 		direction.z -= 1
+		
+	if Input.is_action_pressed("fire") && can_fire:
+		fire("beam-cross")
+		can_fire = false
+		yield(get_tree().create_timer(0.5), "timeout")
+		can_fire = true
+		
 		
 	if direction != Vector3.ZERO:
 		direction = direction.normalized()
@@ -56,3 +59,27 @@ func on_bullet_hit(hit_dir: Vector3):
 	yield(get_tree().create_timer(0.05), "timeout")
 	$Camera.translation -= hit_dir/2;
 	$Camera.fov -= 1
+	
+func fire(pattern: String, color: Color = Color.red):
+	print("player-fire: ", pattern)
+	match pattern:
+		"beam-cross":
+			var beams = []
+			var beam = load("res://scenes/beam.tscn").instance()
+			self.add_child(beam)
+			beams.append(beam)
+			beam.set_color(color)
+			
+			for i in range(1, 4):
+				var other_beam: Spatial = beam.duplicate()
+				other_beam.rotate_y(i * PI/2);
+				self.add_child(other_beam)
+				beams.append(other_beam)
+			
+			yield(get_tree().create_timer(1), "timeout")
+			for node in beams:
+				node.queue_free()
+
+
+	pass
+	
