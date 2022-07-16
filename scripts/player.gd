@@ -40,11 +40,8 @@ var weapon_by_face = {
 	6: null,	
 }
 
-
-
 var current_speed = Vector3.ZERO
 var can_fire = true
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -53,6 +50,8 @@ func _ready():
 
 	for weapon_id in weapon_data:
 		get_weapon_arm_mesh_from_id(weapon_id).visible = false
+
+	$parts/misc.translate(Vector3(0, STAND_UP_OFFSET, 0))
 
 	set_weapon_on_face(1, "laser")
 	set_weapon_on_face(2, "bullet")
@@ -268,9 +267,12 @@ func deploy_die(dir):
 	current_weapon = weapon_by_face[get_current_up_face()]
 	current_arm_mesh = get_weapon_arm_mesh_from_id(current_weapon)
 	current_arm_mesh.visible = true
+	
+	$parts/misc.visible = true
 
 func retract_die():
 	leg.visible = false
 	current_arm_mesh.visible = false
+	$parts/misc.visible = false
 	pass
 	
