@@ -178,6 +178,12 @@ func roll(dir: Vector3):
 	
 	# Do nothing if we're currently rolling.
 	if is_rolling(): return
+	
+	var ray_start = self.global_transform.origin
+	var ray_end = ray_start + dir * 3
+	var intersect = get_world().direct_space_state.intersect_ray(ray_start, ray_end, [], 0b001)
+	if intersect:
+		return
 
 	retract_die()
 

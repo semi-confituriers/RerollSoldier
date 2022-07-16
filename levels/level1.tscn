@@ -35,19 +35,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.049, 0, -9.699 )
 [node name="Borders" type="StaticBody" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="Borders"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 2, 0 )
 shape = SubResource( 5 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Borders"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 21 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2, 21 )
 shape = SubResource( 5 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="Borders"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 2, 0 )
 shape = SubResource( 5 )
 
 [node name="CollisionShape4" type="CollisionShape" parent="Borders"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -21 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 2, -21 )
 shape = SubResource( 5 )
 
 [node name="Spawner" type="Node" parent="."]
