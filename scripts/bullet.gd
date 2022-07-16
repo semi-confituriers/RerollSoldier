@@ -24,4 +24,5 @@ func _on_Bullet_body_shape_entered(body_rid, body, body_shape_index, local_shape
 	if(body.name == "Player"):
 		self.disconnect("area_shape_entered", self, "_on_Bullet_body_shape_entered")
 		self.queue_free()
+		body.on_bullet_hit(speed_vec.normalized())
 	pass # Replace with function body.

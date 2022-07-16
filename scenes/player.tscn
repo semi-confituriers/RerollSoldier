@@ -17,6 +17,6 @@ shape = SubResource( 1 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="PlayerCamera" type="Camera" parent="."]
+[node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.473151, 0.880982, 0, -0.880982, 0.473151, 0, 14.0383, 9.32242 )
 size = 20.0
