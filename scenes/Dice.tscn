@@ -32,6 +32,9 @@ surfaces/0 = {
 script = ExtResource( 7 )
 speed = 10.0
 
+[node name="leg" parent="Dice" instance=ExtResource( 8 )]
+transform = Transform( 0.0104115, 0, 0, 0, 0.0104115, 0, 0, 0, 0.0104115, -0.000133038, 0.0308061, 0.1739 )
+
 [node name="Pivot" type="Spatial" parent="Dice"]
 
 [node name="MeshInstance" type="MeshInstance" parent="Dice/Pivot"]
@@ -69,9 +72,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 visible = false
 mesh = SubResource( 1 )
 material/0 = null
-
-[node name="leg" parent="Dice/Pivot" instance=ExtResource( 8 )]
-transform = Transform( 0.0104115, 0, 0, 0, 0.0104115, 0, 0, 0, 0.0104115, -0.000133038, 0.0308061, 0.1739 )
 
 [node name="Tween" type="Tween" parent="Dice"]
 
