@@ -48,27 +48,28 @@ transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.
 
 [node name="arm_left" parent="parts/misc" instance=ExtResource( 15 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
+
+[node name="arm_weapon" type="Spatial" parent="parts"]
+
+[node name="arm_bullet" parent="parts/arm_weapon" instance=ExtResource( 2 )]
+transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
+
+[node name="src" type="Spatial" parent="parts/arm_weapon/arm_bullet"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 178.16, 224.672, -409.69 )
 visible = false
 
-[node name="arm_bullet" parent="parts" instance=ExtResource( 2 )]
+[node name="arm_laser" parent="parts/arm_weapon" instance=ExtResource( 14 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
 visible = false
 
-[node name="src" type="Spatial" parent="parts/arm_bullet"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 163.049, 211.143, -261.531 )
+[node name="src" type="Spatial" parent="parts/arm_weapon/arm_laser"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 164.392, 201.497, -314.191 )
 
-[node name="arm_laser" parent="parts" instance=ExtResource( 14 )]
+[node name="arm_down" parent="parts/arm_weapon" instance=ExtResource( 13 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
 visible = false
 
-[node name="src" type="Spatial" parent="parts/arm_laser"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 188.137, 236.026, -355.749 )
-
-[node name="arm_down" parent="parts" instance=ExtResource( 13 )]
-transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
-visible = false
-
-[node name="arm_white_flag" parent="parts" instance=ExtResource( 16 )]
+[node name="arm_white_flag" parent="parts/arm_weapon" instance=ExtResource( 16 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
 visible = false
 
