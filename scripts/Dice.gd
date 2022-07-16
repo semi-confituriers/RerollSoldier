@@ -6,10 +6,12 @@ const STAND_UP_OFFSET = 0.7
 var weapon_data = {
 	"laser": {
 		"texture_name": "die_laser_v1.png",
+		"arm_mesh": "arm_laser"
 		#"func": funcref(self, boum) 
 	},
 	"bullet": {
 		"texture_name": "die_bullet_v1.png",
+		"arm_mesh": "arm_bullet"
 		#"func": funcref(self, boum) 
 	}
 }
@@ -17,12 +19,14 @@ var weapon_data = {
 onready var pivot = $Pivot
 onready var mesh = $Pivot/MeshInstance
 onready var tween = $Tween
-onready var leg = $leg
+onready var leg = $parts/leg
 
 export var AFTER_ROLL_DELAY = 0.3
 var roll_counter = 0
+var last_dir = Vector3.LEFT
 
 var current_weapon = null
+var current_arm_mesh = null
 
 var weapon_by_face = {
 	1: null,
@@ -36,10 +40,14 @@ var weapon_by_face = {
 func _ready():
 	for face_id in range(1, 7):
 		mesh.get_node(str(face_id)).visible = false
+
+	for weapon_id in weapon_data:
+		get_weapon_arm_mesh_from_id(weapon_id).visible = false
+
 	set_weapon_on_face(1, "laser")
 	set_weapon_on_face(2, "bullet")
 
-	deploy_die()
+	deploy_die(Vector3.FORWARD)
 
 func boum(): pass
 
@@ -80,13 +88,12 @@ func roll(dir):
 	mesh.transform.origin = Vector3(0, 1, 0)
 	mesh.global_transform.basis = b  ## Apply the rotation
 	
-	current_weapon = weapon_by_face[get_current_up_face()]
-	
-	roll_counter += 1 
+	roll_counter += 1
+	last_dir = dir
 	yield(get_tree().create_timer(AFTER_ROLL_DELAY), "timeout")
 	roll_counter -= 1
-	if roll_counter == 0: 
-		deploy_die()
+	if roll_counter == 0:
+		deploy_die(last_dir)
 
 func get_current_up_face(): 
 	var y_max = -1000
@@ -109,15 +116,41 @@ func set_weapon_on_face(tile_id, weapon_id):
 	face.visible = true
 	weapon_by_face[tile_id] = weapon_id
 
+func unset_weapon_on_face(tile_id): 
+	if weapon_by_face[tile_id] == null: return
+	var face = mesh.get_node(str(tile_id))
+	face.visible = false
+	weapon_by_face[tile_id] = null	
+
+func get_weapon_arm_mesh_from_id(weapon_id): 
+	if weapon_id == null: 
+		return $parts/arm_no_weapon
+	return $parts.get_node(weapon_data[weapon_id]["arm_mesh"])
+
+func get_current_weapon_emission_source():
+	if not current_weapon:
+		return null
+	var weapon_mesh = get_weapon_arm_mesh_from_id(current_weapon)
+	return weapon_mesh.get_node("weapon_emission_source")
+
 func is_rolling(): 
 	return tween.is_active()
 
-func deploy_die():
+func deploy_die(dir):
+	
+	var angle = Vector3.FORWARD.signed_angle_to(dir, Vector3.UP)
+
+	$parts.set_identity()
+	$parts.rotate_y(angle)
+
 	leg.visible = true
 	pivot.translate(Vector3(0, STAND_UP_OFFSET, 0))
-	pass
+	current_weapon = weapon_by_face[get_current_up_face()]
+	current_arm_mesh = get_weapon_arm_mesh_from_id(current_weapon)
+	current_arm_mesh.visible = true
 
 func retract_die():
 	leg.visible = false
+	current_arm_mesh.visible = false
 	pass
 	
