@@ -192,11 +192,17 @@ func roll(dir: Vector3):
 	tween.interpolate_property(pivot, "transform:basis",
 			null, pivot.transform.basis.rotated(axis, PI/2),
 			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
+	tween.interpolate_property(self, "translation",
+			null, self.translation + dir * 2,
+			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
+	tween.interpolate_property(pivot, "translation",
+			null, pivot.translation - dir * 2,
+			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
 	tween.start()
 	yield(tween, "tween_all_completed")
 
 	## Step3: Finalize movement and reverse the offset
-	transform.origin += dir * 2
+#	transform.origin += dir * 2
 	var b = mesh.global_transform.basis  ## Save the rotation
 	pivot.transform = Transform.IDENTITY
 	mesh.transform.origin = Vector3(0, 1, 0)

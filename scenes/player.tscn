@@ -99,4 +99,6 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 2 )
 
+[node name="Spatial" type="Spatial" parent="."]
+
 [connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]
