@@ -10,7 +10,7 @@ height = 1.2
 albedo_color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="CylinderShape" id=3]
-radius = 0.6
+radius = 0.8
 
 [node name="Enemy" type="KinematicBody"]
 collision_layer = 4

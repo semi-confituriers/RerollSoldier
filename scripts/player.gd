@@ -74,3 +74,14 @@ func fire(pattern: String, color: Color = Color.red):
 			yield(get_tree().create_timer(0.2), "timeout")
 			for node in beams:
 				node.queue_free()
+		"bullet-cross":
+			var dir = Vector3.FORWARD
+			for i in range(0, 4):
+				var this_dir = dir.rotated(Vector3.UP, i * PI/2)
+				var bullet: Spatial = load("res://scenes/bullet.tscn").instance()
+				get_node("/root/Arena").add_child(bullet)
+				
+				var from = self.translation
+#				var from = self.global_transform.origin
+				bullet.fire(from, from + this_dir, 40, false)
+
