@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://dice_player.gd" type="Script" id=1]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="PlaneMesh" id=2]
+
+[sub_resource type="Skin" id=3]
+
+[sub_resource type="ShaderMaterial" id=4]
+
+[node name="DICE_PLAYER" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="refCube" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.8467, 2.90059, 6.77877 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="weapon_1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.48574, -1.13197, 0.259634 )
+mesh = SubResource( 2 )
+skin = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="weapon_2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.97149, -0.856457, 0.519268 )
+mesh = SubResource( 2 )
+skin = SubResource( 3 )
+skeleton = NodePath("../weapon_1")
+material/0 = SubResource( 4 )
