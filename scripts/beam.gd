@@ -20,5 +20,7 @@ func set_color(color: Color):
 	$Vis/Hrz.set_modulate(color)
 
 func _on_beam_hit(body):
-	if body.name == "Enemy":
+	print("beam hit ", body)
+	if body.get_parent().name == "Enemies":
+#	if body.name == "Enemy":
 		body.queue_free()

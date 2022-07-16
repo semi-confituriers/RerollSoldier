@@ -29,7 +29,7 @@ func _physics_process(delta):
 		direction.z -= 1
 		
 	if Input.is_action_pressed("fire") && can_fire:
-		fire("beam-cross")
+		fire("bomb")
 		can_fire = false
 		yield(get_tree().create_timer(0.5), "timeout")
 		can_fire = true
@@ -50,25 +50,20 @@ func _physics_process(delta):
 
 # Called by bullet.gd
 func on_bullet_hit(hit_dir: Vector3):
-	$Camera.fov += 1
-	$Camera.translation += hit_dir/2;
-	yield(get_tree().create_timer(0.05), "timeout")
-	$Camera.translation -= hit_dir;
-	yield(get_tree().create_timer(0.05), "timeout")
-	$Camera.translation += hit_dir;
-	yield(get_tree().create_timer(0.05), "timeout")
-	$Camera.translation -= hit_dir/2;
-	$Camera.fov -= 1
+	$Camera.bump(hit_dir)
+	$Camera.kick_out()
 	
-func fire(pattern: String, color: Color = Color.red):
-	print("player-fire: ", pattern)
-	match pattern:
+func fire(type: String, color: Color = Color.red):
+	print("player-fire: ", type)
+	match type:
 		"beam-cross":
 			var beams = []
-			var beam = load("res://scenes/beam.tscn").instance()
+			var beam: Spatial = load("res://scenes/beam.tscn").instance()
 			self.add_child(beam)
 			beams.append(beam)
 			beam.set_color(color)
+			var coll_area: Area = beam.get_node("Area")
+			coll_area.set_collision_mask_bit(4, false) # Disable coll with player
 			
 			for i in range(1, 4):
 				var other_beam: Spatial = beam.duplicate()
@@ -76,10 +71,31 @@ func fire(pattern: String, color: Color = Color.red):
 				self.add_child(other_beam)
 				beams.append(other_beam)
 			
-			yield(get_tree().create_timer(1), "timeout")
+			yield(get_tree().create_timer(0.2), "timeout")
 			for node in beams:
 				node.queue_free()
+		"bullet-cross":
+			var dir = Vector3.FORWARD
+			for i in range(0, 4):
+				var this_dir = dir.rotated(Vector3.UP, i * PI/2)
+				var bullet: Spatial = load("res://scenes/bullet.tscn").instance()
+				get_node("/root/Arena").add_child(bullet)
+				
+				var from = self.translation
+#				var from = self.global_transform.origin
+				bullet.fire(from, from + this_dir, 40, false)
+				
+		"bomb":
+			var dir = Vector3.FORWARD # TODO: use model otientation
+			var target = self.translation + dir * 5.0
+			
+			var aoe = load("res://scenes/aoe.tscn").instance()
+			get_node("/root/Arena").add_child(aoe)
+#			aoe.translation = target
+			aoe.translation = self.translation
+			aoe.configure(4, 1, Color.blue, false);
+			
+		_:
+			printerr("No attack type ", type)
+			
 
-
-	pass
-	
