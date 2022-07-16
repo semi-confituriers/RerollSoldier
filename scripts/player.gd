@@ -52,6 +52,7 @@ func _ready():
 		get_weapon_arm_mesh_from_id(weapon_id).visible = false
 
 	$parts/misc.translate(Vector3(0, STAND_UP_OFFSET, 0))
+	$parts/arm_weapon.translate(Vector3(0, STAND_UP_OFFSET, 0))
 
 	set_weapon_on_face(1, "laser")
 	set_weapon_on_face(2, "bullet")
@@ -251,14 +252,14 @@ func unset_weapon_on_face(tile_id):
 
 func get_weapon_arm_mesh_from_id(weapon_id): 
 	if weapon_id == null: 
-		return $parts/arm_white_flag
-	return $parts.get_node(weapon_data[weapon_id]["arm_mesh"])
+		return $parts/arm_weapon/arm_white_flag
+	return $parts/arm_weapon.get_node(weapon_data[weapon_id]["arm_mesh"])
 
 func get_current_weapon_emission_source():
 	if not current_weapon:
 		return null
 	var weapon_mesh = get_weapon_arm_mesh_from_id(current_weapon)
-	return weapon_mesh.get_node("weapon_emission_source")
+	return weapon_mesh.get_node("src")
 
 func is_rolling(): 
 	return tween.is_active()
