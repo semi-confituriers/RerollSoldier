@@ -27,10 +27,25 @@ func track(obj: Spatial):
 
 func _process(delta):
 	if track_object != null:
+#		self.get_parent().translation = track_object.global_transform.origin
 		self.get_parent().translation = lerp(self.get_parent().translation, track_object.global_transform.origin, 0.1)
 		
-		var new_dist = (track_object.global_transform.origin - self.global_transform.origin).length()
-		self.fov = self.starting_fov + (track_last_dist - new_dist) * 2
+#	if track_object != null:
+#		var mult = 2.0
+#		var new_dist = (track_object.global_transform.origin - self.global_transform.origin).length()
+#		if track_last_dist - new_dist > 0:
+#			mult += (track_last_dist - new_dist) * 100
+#			if delta * mult > 0.9:
+#				mult = 0.9 / delta
+#
+#		self.get_parent().global_transform.origin = lerp(
+#			self.get_parent().global_transform.origin,
+#			track_object.global_transform.origin, delta * mult)
+##		self.get_parent().translation = lerp(self.get_parent().translation, track_object.global_transform.origin, 0.1)
+#
+##		self.fov = self.starting_fov + (track_last_dist - new_dist) * 2
+#
+#		track_last_dist = new_dist;
 		
 		
 		
