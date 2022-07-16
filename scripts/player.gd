@@ -103,8 +103,9 @@ func _physics_process(delta):
 
 # Called by bullet.gd
 func on_bullet_hit(hit_dir: Vector3):
-	$Camera.bump(hit_dir)
-	$Camera.kick_out()
+	var game = get_node("/root/Game")
+	game.camera.bump(hit_dir)
+	game.camera.kick_out()
 	
 func fire(type: String, color: Color = Color.red):
 	print("player-fire: ", type)

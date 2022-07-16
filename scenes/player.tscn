@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
-[ext_resource path="res://scripts/camera.gd" type="Script" id=2]
 [ext_resource path="res://assets/3.png" type="Texture" id=3]
 [ext_resource path="res://assets/5.png" type="Texture" id=4]
 [ext_resource path="res://assets/4.png" type="Texture" id=5]
@@ -99,10 +98,5 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 2 )
-
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.95877, 0.203419, -0.198446, 0, 0.698303, 0.715802, 0.284183, -0.68629, 0.669512, -4.936, 16.502, 13.352 )
-fov = 67.5
-script = ExtResource( 2 )
 
 [connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]
