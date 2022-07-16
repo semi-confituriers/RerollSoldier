@@ -238,7 +238,7 @@ func unset_weapon_on_face(tile_id):
 
 func get_weapon_arm_mesh_from_id(weapon_id): 
 	if weapon_id == null: 
-		return $parts/arm_no_weapon
+		return $parts/arm_white_flag
 	return $parts.get_node(weapon_data[weapon_id]["arm_mesh"])
 
 func get_current_weapon_emission_source():
