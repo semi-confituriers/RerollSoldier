@@ -29,7 +29,7 @@ func _physics_process(delta):
 		direction.z -= 1
 		
 	if Input.is_action_pressed("fire") && can_fire:
-		fire("beam-cross")
+		fire("bomb")
 		can_fire = false
 		yield(get_tree().create_timer(0.5), "timeout")
 		can_fire = true
@@ -53,9 +53,9 @@ func on_bullet_hit(hit_dir: Vector3):
 	$Camera.bump(hit_dir)
 	$Camera.kick_out()
 	
-func fire(pattern: String, color: Color = Color.red):
-	print("player-fire: ", pattern)
-	match pattern:
+func fire(type: String, color: Color = Color.red):
+	print("player-fire: ", type)
+	match type:
 		"beam-cross":
 			var beams = []
 			var beam: Spatial = load("res://scenes/beam.tscn").instance()
@@ -84,4 +84,18 @@ func fire(pattern: String, color: Color = Color.red):
 				var from = self.translation
 #				var from = self.global_transform.origin
 				bullet.fire(from, from + this_dir, 40, false)
+				
+		"bomb":
+			var dir = Vector3.FORWARD # TODO: use model otientation
+			var target = self.translation + dir * 5.0
+			
+			var aoe = load("res://scenes/aoe.tscn").instance()
+			get_node("/root/Arena").add_child(aoe)
+#			aoe.translation = target
+			aoe.translation = self.translation
+			aoe.configure(4, 1, Color.blue, false);
+			
+		_:
+			printerr("No attack type ", type)
+			
 
