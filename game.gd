@@ -3,6 +3,10 @@ extends Node2D
 
 var current_level_id = 0
 var level_max = 1
+onready var camera: Camera = $CameraNode/Camera
+
+var level: Spatial = null
+var player: KinematicBody = null
 
 func _ready():
 	load_level(1)
@@ -37,6 +41,11 @@ func load_level(level_id: int):
 	$Gui/LevelBox/Level.text = "Level " + str(current_level_id) + " / " + str(level_max)
 	$Gui/LevelBox/Prev.disabled = current_level_id == 1
 	$Gui/LevelBox/Next.disabled = current_level_id == level_max
+	
+	self.level = new_level
+	self.player = new_level.get_node("Player")
+#	self.camera = new_level.get_node("CameraNode/Camera")
+	self.camera.track(self.player)
 	
 	
 func restart_level():
