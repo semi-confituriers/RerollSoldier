@@ -2,20 +2,31 @@ extends KinematicBody
 
 var moving_to: Vector3 = Vector3.INF
 var cnt: float = 0
+var next_cnt: float = 3
 var randwalk_dist: float = 20
 var can_fire = true
+
+enum MobType {
+	Shooter, # Walks randomly, shoots bullets
+	Bull, # Moves towards the player, hits on collision
+	Shaker, # Smash the player and change its weapon
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	cnt += delta
-	if cnt > 3:
+	if cnt > next_cnt:
 		random_move()
+		fire_bullet(get_node("/root/Game/LevelCont/Level/Player").translation, 20)
 		cnt = 0
+		next_cnt = rand_range(3, 4)
+		
 	
 #	if Input.is_action_pressed("ui_accept") && can_fire:
 #		fire_bullet(get_node("/root/Arena/Player").translation, 20)
@@ -35,7 +46,7 @@ func _physics_process(delta):
 			moving_to = Vector3.INF
 			
 		
-		move_and_slide(move, Vector3.UP, true)
+		move = move_and_slide(move, Vector3.UP, true)
 		
 #		self.translation += move;
 
@@ -44,7 +55,7 @@ func _physics_process(delta):
 		
 
 func random_move():
-	var target = get_node("/root/Arena/Player").translation;
+	var target = get_node("/root/Game/LevelCont/Level/Player").translation;
 	
 	var target_vect = target - self.translation;
 	var dir = Vector3.INF
@@ -68,9 +79,9 @@ func random_move():
 func fire_bullet(target: Vector3, speed: float):
 	print("enemy-fire: ", self.translation, "->", target)
 	var bullet = load("res://scenes/bullet.tscn").instance()
-	get_node("/root/Arena").add_child(bullet)
+	get_node("/root/Game/LevelCont/Level").add_child(bullet)
 	bullet.fire(self.translation, target, speed, true) 
 
 # Called by bullet.gd
-func on_bullet_hit(hit_dir: Vector3):
+func on_bullet_hit(_hit_dir: Vector3):
 	self.queue_free()
