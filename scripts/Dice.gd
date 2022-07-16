@@ -1,6 +1,7 @@
 extends KinematicBody
 
 export var speed = 0.4
+const STAND_UP_OFFSET = 0.7
 
 var weapon_data = {
 	"laser": {
@@ -16,7 +17,11 @@ var weapon_data = {
 onready var pivot = $Pivot
 onready var mesh = $Pivot/MeshInstance
 onready var tween = $Tween
-onready var leg = $Pivot/leg
+onready var leg = $leg
+
+export var AFTER_ROLL_DELAY = 0.3
+var roll_counter = 0
+
 var current_weapon = null
 
 var weapon_by_face = {
@@ -52,8 +57,8 @@ func _physics_process(_delta):
 func roll(dir):
 	
 	# Do nothing if we're currently rolling.
-	if tween.is_active():
-		return
+	if is_rolling(): return
+
 	retract_die()
 
 	## Step 1: Offset the pivot
@@ -74,8 +79,14 @@ func roll(dir):
 	pivot.transform = Transform.IDENTITY
 	mesh.transform.origin = Vector3(0, 1, 0)
 	mesh.global_transform.basis = b  ## Apply the rotation
+	
 	current_weapon = weapon_by_face[get_current_up_face()]
-	print(current_weapon)
+	
+	roll_counter += 1 
+	yield(get_tree().create_timer(AFTER_ROLL_DELAY), "timeout")
+	roll_counter -= 1
+	if roll_counter == 0: 
+		deploy_die()
 
 func get_current_up_face(): 
 	var y_max = -1000
@@ -98,15 +109,15 @@ func set_weapon_on_face(tile_id, weapon_id):
 	face.visible = true
 	weapon_by_face[tile_id] = weapon_id
 
-const STAND_UP_OFFSET = 0.5
+func is_rolling(): 
+	return tween.is_active()
 
 func deploy_die():
-	#leg.visible = true
-	#mesh.translate(Vector3(0, STAND_UP_OFFSET, 0))
+	leg.visible = true
+	pivot.translate(Vector3(0, STAND_UP_OFFSET, 0))
 	pass
 
 func retract_die():
-	#leg.visible = false
-	#mesh.translate(Vector3(0, -STAND_UP_OFFSET, 0))
+	leg.visible = false
 	pass
 	
