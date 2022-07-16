@@ -50,25 +50,20 @@ func _physics_process(delta):
 
 # Called by bullet.gd
 func on_bullet_hit(hit_dir: Vector3):
-	$Camera.fov += 1
-	$Camera.translation += hit_dir/2;
-	yield(get_tree().create_timer(0.05), "timeout")
-	$Camera.translation -= hit_dir;
-	yield(get_tree().create_timer(0.05), "timeout")
-	$Camera.translation += hit_dir;
-	yield(get_tree().create_timer(0.05), "timeout")
-	$Camera.translation -= hit_dir/2;
-	$Camera.fov -= 1
+	$Camera.bump(hit_dir)
+	$Camera.kick_out()
 	
 func fire(pattern: String, color: Color = Color.red):
 	print("player-fire: ", pattern)
 	match pattern:
 		"beam-cross":
 			var beams = []
-			var beam = load("res://scenes/beam.tscn").instance()
+			var beam: Spatial = load("res://scenes/beam.tscn").instance()
 			self.add_child(beam)
 			beams.append(beam)
 			beam.set_color(color)
+			var coll_area: Area = beam.get_node("Area")
+			coll_area.set_collision_mask_bit(4, false) # Disable coll with player
 			
 			for i in range(1, 4):
 				var other_beam: Spatial = beam.duplicate()
@@ -76,10 +71,6 @@ func fire(pattern: String, color: Color = Color.red):
 				self.add_child(other_beam)
 				beams.append(other_beam)
 			
-			yield(get_tree().create_timer(1), "timeout")
+			yield(get_tree().create_timer(0.2), "timeout")
 			for node in beams:
 				node.queue_free()
-
-
-	pass
-	

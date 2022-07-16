@@ -46,11 +46,14 @@ func _physics_process(delta):
 func random_move():
 	var target = get_node("/root/Arena/Player").translation;
 	
-	var dir = (target - self.translation).normalized()
-	dir = dir.rotated(Vector3.UP, rand_range(-PI/4, PI/4))
+	var target_vect = target - self.translation;
+	var dir = Vector3.INF
+	if target_vect.length() < 5:
+		dir = (self.translation - target).normalized().rotated(Vector3.UP, rand_range(-PI/2, PI/2))
+	else:
+		dir = target_vect.normalized().rotated(Vector3.UP, rand_range(-PI/4, PI/4))
 	
 	moving_to = self.translation + dir * rand_range(randwalk_dist/2, randwalk_dist)
-	print("Moving from ", self.translation, "to ", moving_to)
 		
 #	var space_state = get_world().direct_space_state
 #	while true:
@@ -62,7 +65,7 @@ func random_move():
 #			break
 
 func fire_bullet(target: Vector3, speed: float):
-	var bullet_inst = load("res://scenes/bullet.tscn").instance()
-	get_node("/root/Arena").add_child(bullet_inst)
-	bullet_inst.translation = self.translation
-	bullet_inst.move_towards(target, speed)
+	print("enemy-fire: ", self.translation, "->", target)
+	var bullet = load("res://scenes/bullet.tscn").instance()
+	get_node("/root/Arena").add_child(bullet)
+	bullet.fire(self.translation, target, speed, true) 

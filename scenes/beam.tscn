@@ -37,7 +37,6 @@ extents = Vector3( 0.3, 0.3, 10 )
 script = ExtResource( 4 )
 
 [node name="Vis" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1.05465, 0, 0, 0, 1.05465, 0, 0, 0 )
 
 [node name="Vrt" type="AnimatedSprite3D" parent="Vis"]
 transform = Transform( 2.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
@@ -58,8 +57,8 @@ playing = true
 anims/fluctuate = SubResource( 3 )
 
 [node name="Area" type="Area" parent="."]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 0
+collision_mask = 6
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0, 0 )
