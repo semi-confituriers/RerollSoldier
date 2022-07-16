@@ -16,7 +16,7 @@ var weapon_data = {
 onready var pivot = $Pivot
 onready var mesh = $Pivot/MeshInstance
 onready var tween = $Tween
-
+onready var leg = $Pivot/leg
 var current_weapon = null
 
 var weapon_by_face = {
@@ -31,8 +31,10 @@ var weapon_by_face = {
 func _ready():
 	for face_id in range(1, 7):
 		mesh.get_node(str(face_id)).visible = false
-	_set_weapon_on_face(1, "laser")
-	_set_weapon_on_face(2, "bullet")
+	set_weapon_on_face(1, "laser")
+	set_weapon_on_face(2, "bullet")
+
+	deploy_die()
 
 func boum(): pass
 
@@ -48,9 +50,11 @@ func _physics_process(_delta):
 		roll(-forward.cross(Vector3.UP))
 
 func roll(dir):
+	
 	# Do nothing if we're currently rolling.
 	if tween.is_active():
 		return
+	retract_die()
 
 	## Step 1: Offset the pivot
 	pivot.translate(dir)
@@ -67,12 +71,9 @@ func roll(dir):
 	## Step3: Finalize movement and reverse the offset
 	transform.origin += dir * 2
 	var b = mesh.global_transform.basis  ## Save the rotation
-	print(b)
-	
 	pivot.transform = Transform.IDENTITY
 	mesh.transform.origin = Vector3(0, 1, 0)
 	mesh.global_transform.basis = b  ## Apply the rotation
-
 	current_weapon = weapon_by_face[get_current_up_face()]
 	print(current_weapon)
 
@@ -90,9 +91,22 @@ func get_current_up_face():
 func _on_Tween_tween_step(object, key, elapsed, value):
 	pivot.transform = pivot.transform.orthonormalized()
 
-func _set_weapon_on_face(tile_id, weapon_id):
+func set_weapon_on_face(tile_id, weapon_id):
 	var texture_path = weapon_data[weapon_id]["texture_name"]
 	var face = mesh.get_node(str(tile_id))
 	face.texture = load("res://assets/"+texture_path)
 	face.visible = true
 	weapon_by_face[tile_id] = weapon_id
+
+const STAND_UP_OFFSET = 0.5
+
+func deploy_die():
+	#leg.visible = true
+	#mesh.translate(Vector3(0, STAND_UP_OFFSET, 0))
+	pass
+
+func retract_die():
+	#leg.visible = false
+	#mesh.translate(Vector3(0, -STAND_UP_OFFSET, 0))
+	pass
+	
