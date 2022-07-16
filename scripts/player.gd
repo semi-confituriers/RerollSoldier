@@ -191,15 +191,17 @@ func roll(dir: Vector3):
 	var axis = dir.cross(Vector3.DOWN)
 	tween.interpolate_property(pivot, "transform:basis",
 			null, pivot.transform.basis.rotated(axis, PI/2),
-			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
+			1/roll_speed, Tween.TRANS_QUART, Tween.EASE_IN)
 	tween.interpolate_property(self, "translation",
 			null, self.translation + dir * 2,
-			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
+			1/roll_speed, Tween.TRANS_QUART, Tween.EASE_IN)
 	tween.interpolate_property(pivot, "translation",
 			null, pivot.translation - dir * 2,
-			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
+			1/roll_speed, Tween.TRANS_QUART, Tween.EASE_IN)
 	tween.start()
 	yield(tween, "tween_all_completed")
+	
+	$StepSound.play_rand()
 
 	## Step3: Finalize movement and reverse the offset
 #	transform.origin += dir * 2
