@@ -43,3 +43,16 @@ func _physics_process(delta):
 	
 	# Moving the character
 	velocity = move_and_slide(velocity, Vector3.UP)
+
+
+# Called by bullet.gd
+func on_bullet_hit(hit_dir: Vector3):
+	$Camera.fov += 1
+	$Camera.translation += hit_dir/2;
+	yield(get_tree().create_timer(0.05), "timeout")
+	$Camera.translation -= hit_dir;
+	yield(get_tree().create_timer(0.05), "timeout")
+	$Camera.translation += hit_dir;
+	yield(get_tree().create_timer(0.05), "timeout")
+	$Camera.translation -= hit_dir/2;
+	$Camera.fov -= 1

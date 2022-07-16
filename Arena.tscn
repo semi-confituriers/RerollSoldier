@@ -1,7 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scripts/PlayerKinBody.gd" type="Script" id=1]
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://res/floor.tres" type="Material" id=2]
+[ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=3]
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 20, 2, 20 )
@@ -10,33 +11,40 @@ extents = Vector3( 20, 2, 20 )
 material = ExtResource( 2 )
 size = Vector2( 40, 40 )
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 1, 2, 22 )
 
-[sub_resource type="CubeMesh" id=2]
+[node name="Arena" type="Spatial"]
 
-[node name="Spatial" type="Spatial"]
+[node name="Ground" type="StaticBody" parent="."]
 
-[node name="StaticBody" type="StaticBody" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 shape = SubResource( 3 )
 
-[node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
+[node name="MeshInstance" type="MeshInstance" parent="Ground"]
 mesh = SubResource( 4 )
 material/0 = null
 
-[node name="PlayerKinBody" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
-script = ExtResource( 1 )
+[node name="Player" parent="." instance=ExtResource( 1 )]
 
-[node name="CollisionShape" type="CollisionShape" parent="PlayerKinBody"]
-shape = SubResource( 1 )
+[node name="Enemy" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.049, 0, -9.699 )
 
-[node name="MeshInstance" type="MeshInstance" parent="PlayerKinBody"]
-mesh = SubResource( 2 )
-material/0 = null
+[node name="Borders" type="StaticBody" parent="."]
 
-[node name="PlayerCamera" type="Camera" parent="PlayerKinBody"]
-transform = Transform( 1, 0, 0, 0, 0.473151, 0.880982, 0, -0.880982, 0.473151, 0, 14.0383, 9.32242 )
-size = 20.0
+[node name="CollisionShape" type="CollisionShape" parent="Borders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Borders"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 21 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="Borders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="Borders"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -21 )
+shape = SubResource( 5 )
