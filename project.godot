@@ -28,10 +28,6 @@ config/icon="res://icon.png"
 
 singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
 
-[gui]
-
-theme/custom_font="res://fonts/Impact.tres"
-
 [input]
 
 move_up={
