@@ -116,10 +116,22 @@ func set_weapon_on_face(tile_id, weapon_id):
 	face.visible = true
 	weapon_by_face[tile_id] = weapon_id
 
+func unset_weapon_on_face(tile_id): 
+	if weapon_by_face[tile_id] == null: return
+	var face = mesh.get_node(str(tile_id))
+	face.visible = false
+	weapon_by_face[tile_id] = null	
+
 func get_weapon_arm_mesh_from_id(weapon_id): 
 	if weapon_id == null: 
 		return $parts/arm_no_weapon
 	return $parts.get_node(weapon_data[weapon_id]["arm_mesh"])
+
+func get_current_weapon_emission_source():
+	if not current_weapon:
+		return null
+	var weapon_mesh = get_weapon_arm_mesh_from_id(current_weapon)
+	return weapon_mesh.get_node("weapon_emission_source")
 
 func is_rolling(): 
 	return tween.is_active()
@@ -127,7 +139,6 @@ func is_rolling():
 func deploy_die(dir):
 	
 	var angle = Vector3.FORWARD.signed_angle_to(dir, Vector3.UP)
-	print(angle)
 
 	$parts.set_identity()
 	$parts.rotate_y(angle)

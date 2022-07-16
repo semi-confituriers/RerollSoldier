@@ -42,9 +42,14 @@ AFTER_ROLL_DELAY = 0.25
 transform = Transform( 0.0076776, 0, 0, 0, 0.0076776, 0, 0, 0, 0.0076776, 0.207438, -0.238513, -0.1901 )
 visible = false
 
+[node name="weapon_emission_source" type="Spatial" parent="Dice/parts/arm_bullet"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 174.147, 149.465, -238.861 )
+
 [node name="arm_laser" parent="Dice/parts" instance=ExtResource( 10 )]
 transform = Transform( 0.0076776, 0, 0, 0, 0.0076776, 0, 0, 0, 0.0076776, 0.207438, -0.238513, -0.1901 )
-visible = false
+
+[node name="weapon_emission_source" type="Spatial" parent="Dice/parts/arm_laser"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 174.147, 149.465, -307.579 )
 
 [node name="arm_no_weapon" parent="Dice/parts" instance=ExtResource( 11 )]
 transform = Transform( 0.0076776, 0, 0, 0, 0.0076776, 0, 0, 0, 0.0076776, 0.207438, -0.238513, -0.1901 )
