@@ -27,8 +27,6 @@ shape = SubResource( 3 )
 mesh = SubResource( 4 )
 material/0 = null
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Enemy" parent="Enemies" instance=ExtResource( 3 )]
@@ -65,3 +63,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2583, 3.8147e-06, -14.1597 
 
 [node name="Spatial" type="Spatial" parent="Spawner/SpawnPoints"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8388, 0, -14.9398 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]

@@ -30,6 +30,7 @@ func load_level(level_id: int):
 	
 	for child in $LevelCont.get_children():
 		$LevelCont.remove_child(child)
+		child.queue_free()
 	$LevelCont.add_child(new_level)
 	
 	# Gui updating

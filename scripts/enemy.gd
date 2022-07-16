@@ -46,7 +46,7 @@ func _physics_process(delta):
 			moving_to = Vector3.INF
 			
 		
-		move_and_slide(move, Vector3.UP, true)
+		move = move_and_slide(move, Vector3.UP, true)
 		
 #		self.translation += move;
 
@@ -83,5 +83,5 @@ func fire_bullet(target: Vector3, speed: float):
 	bullet.fire(self.translation, target, speed, true) 
 
 # Called by bullet.gd
-func on_bullet_hit(hit_dir: Vector3):
+func on_bullet_hit(_hit_dir: Vector3):
 	self.queue_free()
