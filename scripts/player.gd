@@ -11,12 +11,10 @@ var weapon_data = {
 	"laser": {
 		"texture_name": "die_laser_v1.png",
 		"arm_mesh": "arm_laser"
-		#"func": funcref(self, boum) 
 	},
 	"bullet": {
 		"texture_name": "die_bullet_v1.png",
 		"arm_mesh": "arm_bullet"
-		#"func": funcref(self, boum) 
 	}
 }
 

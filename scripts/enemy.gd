@@ -22,7 +22,7 @@ var mob_data = {
 }
 
 var current_type = null
-var default_type = "shooter"
+var default_type = "bomber"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,7 +35,11 @@ func _process(delta):
 	cnt += delta
 	if cnt > next_cnt:
 		random_move()
-		fire_bullet(player.translation, 15)
+		match current_type: 
+			"shooter":
+				fire_bullet(player.translation, 15)
+			"bomber": 
+				fire_mortier(player.translation, 5)
 		cnt = 0
 		next_cnt = rand_range(3, 4)
 	look_at(player.translation, Vector3.UP)
@@ -72,10 +76,14 @@ func fire_bullet(target: Vector3, speed: float):
 	from.y = 1.0
 	bullet.fire(from, target, speed, true) 
 
-func fire_bomb(target: Vector3, speed: float): 
-	var bomb = load("res://scenes/mortier.tscn").instance()
-	get_node("/root/Game/LevelCont/Level").add_child(bomb)
-	
+func fire_mortier(target: Vector3, speed: float): 
+	var mortier = load("res://scenes/mortier.tscn").instance()
+	get_node("/root/Game/LevelCont/Level").add_child(mortier)
+
+	var from = get_mesh_emission_src(current_type).global_transform.origin
+	print(from)
+	from.y = 1.0
+	mortier.fire(from, target, speed)
 # Called by bullet.gd
 func on_hit(dmg: int, _hit_dir: Vector3):
 
