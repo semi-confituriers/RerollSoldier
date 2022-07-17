@@ -1,7 +1,8 @@
 extends Area
 
-var speed_vec = Vector3.ZERO
+export var damage: int = 1
 
+var speed_vec = Vector3.ZERO
 var colored_materials = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -53,5 +54,5 @@ func _on_Bullet_body_shape_entered(body_rid, body, body_shape_index, local_shape
 		print("bullet hit self: ", self.name, " layers=", self.get_collision_layer(), " mask=", self.get_collision_mask())
 	if body.name == "Player" || body.get_parent().name == "Enemies":
 		self.disconnect("area_shape_entered", self, "_on_Bullet_body_shape_entered")
-		body.on_bullet_hit(speed_vec.normalized())
+		body.on_hit(self.damage, speed_vec.normalized())
 	self.queue_free()

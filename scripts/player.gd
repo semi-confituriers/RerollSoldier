@@ -101,7 +101,7 @@ func _physics_process(delta):
 				can_fire = true
 
 # Called by bullet.gd
-func on_bullet_hit(hit_dir: Vector3):
+func on_hit(_dmg: int, hit_dir: Vector3):
 	var game = get_node("/root/Game")
 	game.camera.bump(hit_dir)
 	game.camera.kick_out()
