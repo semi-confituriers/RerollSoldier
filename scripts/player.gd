@@ -196,7 +196,7 @@ func fire(type: String, color: Color = Color.red):
 				
 				var from = src_pos
 #				var from = self.global_transform.origin
-				bullet.fire(from, from + this_dir, 40, false)
+				bullet.fire(from, from + this_dir, 40, false, "green")
 			
 			$WeaponAnim.stop()
 			$WeaponAnim.play("fire-bullet")
@@ -210,7 +210,7 @@ func fire(type: String, color: Color = Color.red):
 			var bullet: Spatial = load("res://scenes/bullet.tscn").instance()
 			get_node("/root/Game/LevelCont/Level").add_child(bullet)
 			var from = src_pos
-			bullet.fire(from, from + dir, 40, false)
+			bullet.fire(from, from + dir, 40, false, "yellow")
 			$WeaponAnim.stop()
 			$WeaponAnim.play("fire-bullet")
 			self.move_and_collide(-current_dir)

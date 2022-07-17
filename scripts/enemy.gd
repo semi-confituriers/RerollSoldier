@@ -74,7 +74,7 @@ func fire_bullet(target: Vector3, speed: float):
 	#var from = self.translation
 	var from = get_mesh_emission_src(current_type).global_transform.origin
 #	from.y = 1.0
-	bullet.fire(from, target, speed, true) 
+	bullet.fire(from, target, speed, true, "red") 
 
 func fire_mortier(target: Vector3, speed: float): 
 	var mortier = load("res://scenes/mortier.tscn").instance()
