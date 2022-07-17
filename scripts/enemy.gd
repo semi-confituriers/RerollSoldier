@@ -98,9 +98,13 @@ func on_hit(dmg: int, hit_dir: Vector3):
 		yield(get_tree().create_timer(0.4), "timeout")
 		self.scale = orig_scale
 	else:
-		$DeathSound.play()
-		self.hide()
-		yield($DeathSound, "finished")
+		get_node("/root/Game").player.get_node("DeathSound").play()
+#		var new_own = get_node("/root/Game").level
+#		var deathsound = $DeathSound
+#		deathsound.set_owner(new_own)
+#		new_own.add_child(deathsound)
+#		self.remove_child(deathsound)
+#		deathsound.play()
 		self.queue_free()
 	
 func set_enemy_type(enemy_type_id):

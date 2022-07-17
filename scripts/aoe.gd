@@ -25,7 +25,14 @@ func configure(radius: float, delay: float, color: Color, is_enemy_: bool):
 	yield(get_tree().create_timer(delay), "timeout")
 	
 	for body in inside:
-		body.queue_free()
+		body.on_hit(2, Vector3.DOWN)
+	
+	
+	var impact: Spatial = load("res://res/vfx/impact.tscn").instance()
+	get_node("/root/Game").level.add_child(impact)
+	impact.global_transform.origin = self.global_transform.origin + Vector3.UP
+	
+	get_node("/root/Game").player.get_node("BombSound").play()
 	
 	self.queue_free()
 

@@ -17,12 +17,11 @@ func fire(from: Vector3, to: Vector3, delay: float):
 	self.delay = delay
 	self.from = from
 	self.dest_vector = to - from
-#	self.speed_vec = (to - from).normalized() * delay
 	
-#	tween.interpolate_property(mesh, "position.x",
-#        Vector2(0, 0), Vector2(100, 100), 1,
-#        Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-#	tween.start()
+	var aoe: Spatial = load("res://scenes/aoe.tscn").instance()
+	get_node("/root/Game").level.add_child(aoe)
+	aoe.global_transform.origin = to
+	aoe.configure(4, delay, Color.red, true)
 
 func _process(delta):
 	if delay == 0.0:
@@ -35,13 +34,14 @@ func _process(delta):
 	pos.x += dest_vector.x * percent
 	pos.z += dest_vector.z * percent
 	
-	pos.y += (1.0 - pow(2 * percent - 1, 2)) * 5 + (-dest_vector.y)
+	pos.y += (1.0 - pow(2 * percent - 1, 2)) * 5
 	
 	mesh.global_transform.origin = pos
 	
 	if percent >= 1.0:
 		emit_signal("hit")
 		self.queue_free()
+		
 	
 
 #
