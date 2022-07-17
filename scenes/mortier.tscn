@@ -1,23 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/mortier.gd" type="Script" id=1]
 
-[sub_resource type="SphereMesh" id=1]
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.7
+bottom_radius = 0.7
+height = 0.3
 
-[sub_resource type="BoxShape" id=2]
-
-[node name="mortier" type="Area"]
+[node name="mortier" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.43897, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 0.892026, 0, 0, 0, -0.23534, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 2 )
-
 [node name="Tween" type="Tween" parent="."]
-
-[connection signal="body_entered" from="." to="." method="_on_mortier_body_entered"]

@@ -39,7 +39,7 @@ func _process(delta):
 			"shooter":
 				fire_bullet(player.translation, 15)
 			"bomber": 
-				fire_mortier(player.translation, 5)
+				fire_mortier(player.translation, 2)
 		cnt = 0
 		next_cnt = rand_range(3, 4)
 	look_at(player.translation, Vector3.UP)
@@ -81,8 +81,7 @@ func fire_mortier(target: Vector3, speed: float):
 	get_node("/root/Game/LevelCont/Level").add_child(mortier)
 
 	var from = get_mesh_emission_src(current_type).global_transform.origin
-	mortier.velocity = mortier.transform.basis.z * mortier.fire_velocity
-	
+
 	mortier.fire(from, target, speed)
 # Called by bullet.gd
 func on_hit(dmg: int, hit_dir: Vector3):
