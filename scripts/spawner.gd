@@ -13,6 +13,11 @@ export var mob_list = [
 	[90, [ [3, "shooter"], [3, "shooter"], [1, "shooter"]] ],
 	[100, [ [4, "bomber"], [1, "bomber"], [1, "bomber"]] ],
 	[120, [ [3, "shooter"], [5, "shooter"], [4, "bomber"]] ],
+	[140, [ [5, "shooter"], [5, "shooter"], [5, "bomber"]] ],
+	[155, [ [5, "shooter"], [5, "shooter"], [5, "bomber"]] ],
+	[160, [ [5, "shooter"], [5, "shooter"], [5, "bomber"]] ],
+	[170, [ [5, "shooter"], [5, "shooter"], [5, "bomber"]] ],
+	[170, [ [10, "shooter"], [10, "shooter"], [10, "bomber"]] ],
 ]
 export var disabled: bool = false
 

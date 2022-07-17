@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Loop - 17:07:2022 19.mp3-5bfcd0caa019be4e5f273205f14fafa8.mp3str"
+
+[deps]
+
+source_file="res://assets/Loop - 17:07:2022 19.mp3"
+dest_files=[ "res://.import/Loop - 17:07:2022 19.mp3-5bfcd0caa019be4e5f273205f14fafa8.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

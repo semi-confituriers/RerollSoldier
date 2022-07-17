@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Loop Crush - 17:07:2022 19.mp3-a115600aa630455edf73f43062d0983e.mp3str"
+
+[deps]
+
+source_file="res://assets/Loop Crush - 17:07:2022 19.mp3"
+dest_files=[ "res://.import/Loop Crush - 17:07:2022 19.mp3-a115600aa630455edf73f43062d0983e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
