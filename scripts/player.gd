@@ -331,7 +331,7 @@ func is_rolling():
 	return tween.is_active()
 
 func deploy_die(dir: Vector3):
-	
+	current_dir = dir
 	var angle = Vector3.FORWARD.signed_angle_to(dir, Vector3.UP)
 
 	$parts.set_identity()
