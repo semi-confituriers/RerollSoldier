@@ -4,6 +4,7 @@ var walk_speed: float = 6
 var roll_speed: float = 10
 const AFTER_ROLL_DELAY: float = 0.1
 const fall_acceleration: float = 4.0
+const recover_time: float = 1.0
 
 
 var weapon_data = {
@@ -119,7 +120,7 @@ func on_hit(_dmg: int, hit_dir: Vector3):
 	game.camera.bump(hit_dir)
 	game.camera.kick_out()
 	
-	throw_up(0.5)
+	throw_up(recover_time)
 	
 func fire(type: String, color: Color = Color.red):
 	print("player-fire: ", type)
@@ -135,6 +136,7 @@ func fire(type: String, color: Color = Color.red):
 		"laser":
 			var beams = []
 			var beam: Spatial = load("res://scenes/beam.tscn").instance()
+			beam.set_color(Color.blue)
 			self.add_child(beam)
 			beam.translation = src_pos - self.global_transform.origin
 			
@@ -144,7 +146,6 @@ func fire(type: String, color: Color = Color.red):
 #			beam.look_at(self.translation + current_dir, Vector3.UP)
 			
 			beams.append(beam)
-			beam.set_color(color)
 			var coll_area: Area = beam.get_node("Area")
 			coll_area.set_collision_mask_bit(4, false) # Disable coll with player
 			
@@ -153,6 +154,9 @@ func fire(type: String, color: Color = Color.red):
 #				other_beam.rotate_y(i * PI/2);
 #				self.add_child(other_beam)
 #				beams.append(other_beam)
+
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play("fire-laser")
 #
 			yield(get_tree().create_timer(0.2), "timeout")
 			for node in beams:
@@ -178,10 +182,6 @@ func fire(type: String, color: Color = Color.red):
 			
 			$AnimationPlayer.stop()
 			$AnimationPlayer.play("fire-bullet")
-			
-#			$WeaponSounds.stream = load("res://sounds/fire-bullet.wav")
-#			$WeaponSounds.pitch_scale = rand_range(0.9, 1.1)
-#			$WeaponSounds.play()
 			
 			yield(get_tree().create_timer(0.2), "timeout")
 			can_fire = true

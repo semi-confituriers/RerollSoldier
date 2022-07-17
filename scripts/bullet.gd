@@ -14,8 +14,7 @@ func _ready():
 #	speed_vec = (target - self.translation).normalized() * speed
 	
 func fire(from: Vector3, to: Vector3, speed: float, is_enemy: bool):
-	from = Vector3(from.x, 0.5, from.z)
-	to = Vector3(to.x, 0.5, to.z)
+	to.y = from.y
 	self.translation = from
 	self.speed_vec = (to - from).normalized() * speed
 	self.look_at(to, Vector3.UP)

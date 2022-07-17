@@ -83,7 +83,10 @@ func fire_bullet(target: Vector3, speed: float):
 #	print("enemy-fire: ", self.translation, "->", target)
 	var bullet = load("res://scenes/bullet.tscn").instance()
 	get_node("/root/Game/LevelCont/Level").add_child(bullet)
-	bullet.fire(self.translation, target, speed, true) 
+	
+	var from = self.translation
+	from.y = 1.0
+	bullet.fire(from, target, speed, true) 
 
 # Called by bullet.gd
 func on_hit(dmg: int, _hit_dir: Vector3):
