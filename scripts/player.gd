@@ -100,7 +100,6 @@ func _physics_process(delta):
 				yield(get_tree().create_timer(0.5), "timeout")
 				can_fire = true
 
-
 # Called by bullet.gd
 func on_bullet_hit(hit_dir: Vector3):
 	var game = get_node("/root/Game")
