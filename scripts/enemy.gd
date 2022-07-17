@@ -73,10 +73,9 @@ func fire_bullet(target: Vector3, speed: float):
 	bullet.fire(from, target, speed, true) 
 
 func fire_bomb(target: Vector3, speed: float): 
-	var bomb = load("res://scenes/bomb.tscn").instance()
+	var bomb = load("res://scenes/mortier.tscn").instance()
 	get_node("/root/Game/LevelCont/Level").add_child(bomb)
 	
-
 # Called by bullet.gd
 func on_hit(dmg: int, _hit_dir: Vector3):
 

@@ -8,7 +8,7 @@ var colored_materials = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-	
+
 #func move_towards(target: Vector3, speed: float):
 #	look_at(target, Vector3.UP)
 #	speed_vec = (target - self.translation).normalized() * speed
