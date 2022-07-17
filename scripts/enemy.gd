@@ -9,26 +9,20 @@ export var hitpoints = 2
 
 onready var orig_scale = self.scale
 
-#enum MobType {
-#	Shooter, # walks randomly, shoots bullets
-#	Bull, # Moves towards the player, hits on collision
-#	Shaker, # Smash the player and change its weapon
-#}
-
 var mob_data = {
 	"ball": {
 		"mesh": "ball"
 	},
 	"shooter": {
 		"mesh": "card"
-	}, 
+	},
 	"bomber": {
 		"mesh": "stack"
 	}
 }
 
 var current_type = null
-var default_type = "shooter"
+var default_type = "bomber"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,12 +31,14 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	var player = get_node("/root/Game/LevelCont/Level/Player")
 	cnt += delta
 	if cnt > next_cnt:
 		random_move()
-		fire_bullet(get_node("/root/Game/LevelCont/Level/Player").translation, 15)
+		fire_bullet(player.translation, 15)
 		cnt = 0
 		next_cnt = rand_range(3, 4)
+	look_at(player.translation, Vector3.UP)
 
 func _physics_process(delta):
 	if moving_to != Vector3.INF:
@@ -65,15 +61,6 @@ func random_move():
 	
 	moving_to = self.translation + dir * rand_range(randwalk_dist/2, randwalk_dist)
 	moving_to.y = 0
-		
-#	var space_state = get_world().direct_space_state
-#	while true:
-#		var pos = self.translation + Vector3(rand_range(-30, 30), 0, rand_range(-30, 30))
-#		if space_state.intersect_ray(self.translation + Vector3(0,0.1,0), pos + Vector3(0,0.1,0)):
-#			continue
-#		else:
-#			moving_to = pos
-#			break
 
 func fire_bullet(target: Vector3, speed: float):
 #	print("enemy-fire: ", self.translation, "->", target)
