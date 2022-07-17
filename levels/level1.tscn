@@ -121,6 +121,7 @@ transform = Transform( 0.70739, 0, -0.706823, 0, 1, 0, 0.706823, 0, 0.70739, -26
 transform = Transform( 0.88697, 0, 0.461826, 0, 1, 0, -0.461826, 0, 0.88697, -13.4086, 0, -15.1614 )
 
 [node name="CameraNode(config_only)" parent="." instance=ExtResource( 5 )]
+visible = false
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.728735, 0.671497, 0.134302, -0.510975, 0.402635, 0.759466, 0.455905, -0.622075, 0.636533, -8.3108, 8.737, 2.92213 )

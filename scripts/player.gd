@@ -119,9 +119,11 @@ func _physics_process(delta):
 				fire(weapon)
 
 # Called by bullet.gd
-func on_hit(_dmg: int, hit_dir: Vector3):
+func on_hit(dmg: int, hit_dir: Vector3):
 	if self.invincible:
 		return
+	
+	get_node("/root/Game").change_hitpoints(-dmg)
 		
 	var impact: Spatial = load("res://res/vfx/impact.tscn").instance()
 	get_node("/root/Game").level.add_child(impact)
