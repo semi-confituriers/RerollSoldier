@@ -34,10 +34,10 @@ func fire(from: Vector3, to: Vector3, speed: float, is_enemy: bool):
 #		print("Player coll mask: ", self.get_collision_mask())
 #		self.set_collision_mask_bit(1, false) # mask for hitting player
 #		print(" -> Player coll mask: ", self.get_collision_mask())
-		if not "blue" in colored_materials:
-			colored_materials["blue"] = $MeshInstance.get_surface_material(0).duplicate()
-			colored_materials["blue"].albedo_color = Color.blue
-		$MeshInstance.set_surface_material(0, colored_materials["blue"])
+		if not "green" in colored_materials:
+			colored_materials["green"] = $MeshInstance.get_surface_material(0).duplicate()
+			colored_materials["green"].albedo_color = Color.green
+		$MeshInstance.set_surface_material(0, colored_materials["green"])
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
