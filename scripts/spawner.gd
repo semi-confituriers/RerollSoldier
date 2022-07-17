@@ -4,6 +4,7 @@ export var mob_list = [
 	[1.0, [ [3, "red"], [1, "blue"] ] ],
 	[5.0, [ [5, "red"] ] ],
 ]
+export var disabled: bool = false
 
 var mob_config = {
 	"red": {
@@ -16,8 +17,9 @@ var mob_config = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	yield(get_tree().create_timer(0.5), "timeout")
-	spawn()
+	if !disabled:
+		yield(get_tree().create_timer(0.5), "timeout")
+		spawn()
 
 func spawn():
 	var spawn_points: Array = $SpawnPoints.get_children()
