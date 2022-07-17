@@ -9,17 +9,31 @@ export var hitpoints = 2
 
 onready var orig_scale = self.scale
 
-enum MobType {
-	Shooter, # Walks randomly, shoots bullets
-	Bull, # Moves towards the player, hits on collision
-	Shaker, # Smash the player and change its weapon
+#enum MobType {
+#	Shooter, # walks randomly, shoots bullets
+#	Bull, # Moves towards the player, hits on collision
+#	Shaker, # Smash the player and change its weapon
+#}
+
+var mob_data = {
+	"ball": {
+		"mesh": "ball"
+	},
+	"shooter": {
+		"mesh": "card"
+	}, 
+	"bomber": {
+		"mesh": "stack"
+	}
 }
+
+var current_type = null
+var default_type = "shooter"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_enemy_type(default_type)
 	pass # Replace with function body.
-
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -29,33 +43,15 @@ func _process(delta):
 		fire_bullet(get_node("/root/Game/LevelCont/Level/Player").translation, 15)
 		cnt = 0
 		next_cnt = rand_range(3, 4)
-		
-	
-#	if Input.is_action_pressed("ui_accept") && can_fire:
-#		fire_bullet(get_node("/root/Arena/Player").translation, 20)
-#		can_fire = false
-#		yield(get_tree().create_timer(0.5), "timeout")
-#		can_fire = true
-		
 
 func _physics_process(delta):
 	if moving_to != Vector3.INF:
 		var diff = moving_to - self.translation
-
-#		var move = lerp(self.translation, moving_to, 1)
 		var move = (diff.normalized() * 5)
 		if move.length() * delta > diff.length():
 			move = diff
 			moving_to = Vector3.INF
-			
-		
 		move = move_and_slide(move, Vector3.UP, true)
-		
-#		self.translation += move;
-
-
-
-		
 
 func random_move():
 	var target = get_node("/root/Game/LevelCont/Level/Player").translation;
@@ -90,10 +86,9 @@ func fire_bullet(target: Vector3, speed: float):
 
 # Called by bullet.gd
 func on_hit(dmg: int, _hit_dir: Vector3):
-	
-	
+
 	self.scale = Vector3(0.8, 0.8, 0.8)
-	
+
 	hitpoints -= dmg
 	if hitpoints > 0:
 		$HitSound.play()
@@ -105,3 +100,12 @@ func on_hit(dmg: int, _hit_dir: Vector3):
 		yield($DeathSound, "finished")
 		self.queue_free()
 	
+func set_enemy_type(enemy_type_id): 
+	if current_type != null:
+		get_mesh_by_enemy_type(current_type).visible = false
+	get_mesh_by_enemy_type(enemy_type_id).visible = true
+	current_type = enemy_type_id
+	
+func get_mesh_by_enemy_type(enemy_type_id): 
+	var node_name = mob_data[enemy_type_id]["mesh"]
+	return $enemy_meshes.get_node(node_name)
