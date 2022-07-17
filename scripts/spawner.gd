@@ -9,16 +9,6 @@ export var disabled: bool = false
 
 var mob_scene = load("res://scenes/enemy.tscn")
 
-var mob_config = {
-	"red": {
-		"scene": "res://scenes/enemy.tscn",
-	},
-	"blue": {
-		"scene": "res://scenes/enemy.tscn"
-	},
-}
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if !disabled:
