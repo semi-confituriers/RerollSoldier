@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/die_model/die_arm_bullet.gltf" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/2.png" type="Texture" id=6]
 [ext_resource path="res://assets/6.png" type="Texture" id=7]
 [ext_resource path="res://res/anim/fire-laser.tres" type="Animation" id=8]
+[ext_resource path="res://assets/die_arm_bullet_mono.gltf" type="PackedScene" id=9]
 [ext_resource path="res://res/anim/fire-bullet.tres" type="Animation" id=10]
 [ext_resource path="res://sounds/dice-hit.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/1.png" type="Texture" id=12]
@@ -178,6 +179,22 @@ transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.
 [node name="arm_weapon" type="Spatial" parent="parts"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.699074, 0 )
 
+[node name="arm_bullet_mono" parent="parts/arm_weapon" instance=ExtResource( 9 )]
+transform = Transform( 0.00933537, 0, 0, 0, 0.00933537, 0, 0, 0, 0.00933537, -0.00998008, -0.768365, 0.427423 )
+visible = false
+
+[node name="src" type="Spatial" parent="parts/arm_weapon/arm_bullet_mono"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 164.056, 224.672, -245.917 )
+visible = false
+
+[node name="flash" type="OmniLight" parent="parts/arm_weapon/arm_bullet_mono"]
+transform = Transform( 104.285, 0, 0, 0, 104.285, 0, 0, 0, 104.285, 165.569, 202.881, -361.77 )
+visible = false
+light_color = Color( 1, 0.929412, 0.176471, 1 )
+light_energy = 1.734
+shadow_enabled = true
+omni_range = 11.575
+
 [node name="arm_bullet" parent="parts/arm_weapon" instance=ExtResource( 2 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00716175, -0.0189791, -0.794868, 0.364405 )
 visible = false
@@ -195,9 +212,11 @@ omni_range = 11.575
 
 [node name="arm_laser" parent="parts/arm_weapon" instance=ExtResource( 14 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00716175, -0.0189791, -0.794868, -0.219679 )
+visible = false
 
 [node name="src" type="Spatial" parent="parts/arm_weapon/arm_laser"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 190.231, 217.376, -204.44 )
+visible = false
 
 [node name="flash" type="OmniLight" parent="parts/arm_weapon/arm_laser"]
 transform = Transform( 104.285, 0, 0, 0, 104.285, 0, 0, 0, 104.285, 191.28, 235.049, -429.672 )

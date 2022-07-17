@@ -9,12 +9,16 @@ const recover_time: float = 1.0
 
 var weapon_data = {
 	"laser": {
-		"texture_name": "die_laser_v1.png",
+		"texture_name": "label_blue.png",
 		"arm_mesh": "arm_laser"
 	},
 	"bullet": {
-		"texture_name": "die_bullet_v1.png",
+		"texture_name": "label_green.png",
 		"arm_mesh": "arm_bullet"
+	}, 
+	"bullet_mono": {
+		"texture_name": "label_yellow.png",
+		"arm_mesh": "arm_bullet_mono"
 	}
 }
 
@@ -58,6 +62,7 @@ func _ready():
 
 	set_weapon_on_face(1, "laser")
 	set_weapon_on_face(2, "bullet")
+	set_weapon_on_face(3, "bullet_mono")
 
 	deploy_die(Vector3.FORWARD, false)
 
@@ -200,6 +205,8 @@ func fire(type: String, color: Color = Color.red):
 			
 			yield(get_tree().create_timer(0.2), "timeout")
 			can_fire = true
+		"bullet_mono":
+			print("nonn")
 		"bomb":
 #			var dir = Vector3.FORWARD # TODO: use model otientation
 #			var target = self.translation + dir * 5.0

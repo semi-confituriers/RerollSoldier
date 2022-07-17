@@ -22,7 +22,7 @@ var mob_data = {
 }
 
 var current_type = null
-var default_type = "bomber"
+var default_type = "shooter"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -81,7 +81,6 @@ func fire_mortier(target: Vector3, speed: float):
 	get_node("/root/Game/LevelCont/Level").add_child(mortier)
 
 	var from = get_mesh_emission_src(current_type).global_transform.origin
-
 	mortier.velocity = mortier.transform.basis.z * mortier.fire_velocity
 	
 	mortier.fire(from, target, speed)
