@@ -60,9 +60,10 @@ func _ready():
 #	$parts/misc.translate(Vector3(0, STAND_UP_OFFSET, 0))
 #	$parts/arm_weapon.translate(Vector3(0, STAND_UP_OFFSET, 0))
 
-	set_weapon_on_face(1, "laser")
+	set_weapon_on_face(6, "laser")
 	set_weapon_on_face(2, "bullet")
 	set_weapon_on_face(3, "bullet_mono")
+	set_weapon_on_face(4, "bullet_mono")
 
 	deploy_die(Vector3.FORWARD, false)
 
