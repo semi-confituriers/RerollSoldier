@@ -4,16 +4,25 @@ var track_object: Spatial = null
 var track_last_dist: float = 0
 onready var starting_fov = self.fov
 
-func bump(hit_dir: Vector3):
+func bump(hit_dir: Vector3, force: float = 1):
 	hit_dir = hit_dir.normalized()
 	
-	self.translation += hit_dir/2;
+	self.translation += force * hit_dir/2;
 	yield(get_tree().create_timer(0.05), "timeout")
-	self.translation -= hit_dir;
+	self.translation -= force * hit_dir;
 	yield(get_tree().create_timer(rand_range(0.03, 0.08)), "timeout")
-	self.translation += hit_dir;
+	self.translation += force * hit_dir;
 	yield(get_tree().create_timer(rand_range(0.03, 0.08)), "timeout")
-	self.translation -= hit_dir/2;
+	self.translation -= force * hit_dir/2;
+
+func single_bump(hit_dir: Vector3, force: float = 1):
+	hit_dir = hit_dir.normalized()
+	
+	self.translation += force * hit_dir/2;
+	yield(get_tree().create_timer(0.05), "timeout")
+	self.translation -= force * hit_dir;
+	yield(get_tree().create_timer(rand_range(0.02, 0.05)), "timeout")
+	self.translation += force * hit_dir/2;
 
 func kick_out():
 	self.fov += 1

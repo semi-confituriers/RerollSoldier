@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/dice-hit.wav-e5f0644d3f5f86f3e00281bc3993bd29.sample"
+
+[deps]
+
+source_file="res://sounds/dice-hit.wav"
+dest_files=[ "res://.import/dice-hit.wav-e5f0644d3f5f86f3e00281bc3993bd29.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
