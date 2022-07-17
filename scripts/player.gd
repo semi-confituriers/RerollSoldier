@@ -114,6 +114,11 @@ func on_hit(_dmg: int, hit_dir: Vector3):
 	if self.invincible:
 		return
 		
+	var impact: Spatial = load("res://res/vfx/impact.tscn").instance()
+	get_node("/root/Game").level.add_child(impact)
+	impact.global_transform.origin = self.global_transform.origin - hit_dir + Vector3.UP
+		
+		
 	if is_rolling():
 #		can_move = false
 		yield(tween, "tween_all_completed")

@@ -77,9 +77,13 @@ func fire_bomb(target: Vector3, speed: float):
 	get_node("/root/Game/LevelCont/Level").add_child(bomb)
 	
 # Called by bullet.gd
-func on_hit(dmg: int, _hit_dir: Vector3):
+func on_hit(dmg: int, hit_dir: Vector3):
 
 	self.scale = Vector3(0.8, 0.8, 0.8)
+	
+	var impact: Spatial = load("res://res/vfx/impact.tscn").instance()
+	get_node("/root/Game").level.add_child(impact)
+	impact.global_transform.origin = self.global_transform.origin - hit_dir + Vector3.UP
 
 	hitpoints -= dmg
 	if hitpoints > 0:
