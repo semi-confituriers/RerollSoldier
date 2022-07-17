@@ -52,6 +52,7 @@ shape = SubResource( 5 )
 
 [node name="Spawner" type="Node" parent="."]
 script = ExtResource( 4 )
+disabled = true
 
 [node name="SpawnPoints" type="Node" parent="Spawner"]
 

@@ -157,6 +157,8 @@ func fire(type: String, color: Color = Color.red):
 
 			$AnimationPlayer.stop()
 			$AnimationPlayer.play("fire-laser")
+			
+			self.move_and_collide(-current_dir * 0.5)
 #
 			yield(get_tree().create_timer(0.2), "timeout")
 			for node in beams:
@@ -182,6 +184,8 @@ func fire(type: String, color: Color = Color.red):
 			
 			$AnimationPlayer.stop()
 			$AnimationPlayer.play("fire-bullet")
+			
+			self.move_and_collide(-current_dir)
 			
 			yield(get_tree().create_timer(0.2), "timeout")
 			can_fire = true
