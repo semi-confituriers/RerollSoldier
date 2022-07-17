@@ -46,6 +46,9 @@ unit_db = 14.159
 transform = Transform( 0.0659095, 0, 0, 0, 0.0659095, 0, 0, 0, 0.0659095, -0.027211, -0.0118741, -0.0025512 )
 visible = false
 
+[node name="src" type="Spatial" parent="enemy_meshes/card"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.7939, 38.794, -32.3398 )
+
 [node name="ball" type="MeshInstance" parent="enemy_meshes"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 visible = false
@@ -53,6 +56,13 @@ mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 2 )
 
+[node name="src" type="Spatial" parent="enemy_meshes/ball"]
+visible = false
+
 [node name="stack" parent="enemy_meshes" instance=ExtResource( 5 )]
 transform = Transform( 0.132223, 0, 0, 0, 0.132223, 0, 0, 0, 0.132223, 0, 0, 0 )
+visible = false
+
+[node name="src" type="Spatial" parent="enemy_meshes/stack"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.68874, 26.8895, 0.29817 )
 visible = false

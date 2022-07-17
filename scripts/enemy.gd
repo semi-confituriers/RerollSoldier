@@ -22,7 +22,7 @@ var mob_data = {
 }
 
 var current_type = null
-var default_type = "bomber"
+var default_type = "shooter"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,9 +67,15 @@ func fire_bullet(target: Vector3, speed: float):
 	var bullet = load("res://scenes/bullet.tscn").instance()
 	get_node("/root/Game/LevelCont/Level").add_child(bullet)
 	
-	var from = self.translation
+	#var from = self.translation
+	var from = get_mesh_emission_src(current_type).global_transform.origin
 	from.y = 1.0
 	bullet.fire(from, target, speed, true) 
+
+func fire_bomb(target: Vector3, speed: float): 
+	var bomb = load("res://scenes/bomb.tscn").instance()
+	get_node("/root/Game/LevelCont/Level").add_child(bomb)
+	
 
 # Called by bullet.gd
 func on_hit(dmg: int, _hit_dir: Vector3):
@@ -96,3 +102,8 @@ func set_enemy_type(enemy_type_id):
 func get_mesh_by_enemy_type(enemy_type_id): 
 	var node_name = mob_data[enemy_type_id]["mesh"]
 	return $enemy_meshes.get_node(node_name)
+
+func get_mesh_emission_src(enemy_type_id): 
+	var node_name = mob_data[enemy_type_id]["mesh"]
+	var node = $enemy_meshes.get_node(node_name)
+	return node.get_node("src")
