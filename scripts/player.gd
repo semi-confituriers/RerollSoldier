@@ -159,8 +159,8 @@ func fire(type: String, color: Color = Color.red):
 #				self.add_child(other_beam)
 #				beams.append(other_beam)
 
-			$AnimationPlayer.stop()
-			$AnimationPlayer.play("fire-laser")
+			$WeaponAnim.stop()
+			$WeaponAnim.play("fire-laser")
 			
 			self.move_and_collide(-current_dir * 0.5)
 #
@@ -186,8 +186,8 @@ func fire(type: String, color: Color = Color.red):
 #				var from = self.global_transform.origin
 				bullet.fire(from, from + this_dir, 40, false)
 			
-			$AnimationPlayer.stop()
-			$AnimationPlayer.play("fire-bullet")
+			$WeaponAnim.stop()
+			$WeaponAnim.play("fire-bullet")
 			
 			self.move_and_collide(-current_dir)
 			
@@ -319,6 +319,9 @@ func deploy_die(dir, raise: bool = true):
 	current_arm_mesh.visible = true
 	
 	$parts/misc.visible = true
+	
+	var game = get_node("/root/Game")
+	game.camera.single_bump(Vector3.UP, 0.5)
 
 func retract_die():
 	leg.visible = false
@@ -339,6 +342,11 @@ func throw_up(invuln_time: float):
 	self.collision_layer = 0
 	
 	yield($AnimationPlayer, "animation_finished")
+	
+	$WeaponSounds.stream = load("res://sounds/dice-fall.wav")
+	$WeaponSounds.play()
+	var game = get_node("/root/Game")
+	game.camera.bump(Vector3.UP, 0.1)
 	
 	
 	var deploy_dir;
