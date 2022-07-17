@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/die_model/die_arm_bullet.gltf" type="PackedScene" id=2]
@@ -257,7 +257,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 2 )
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=9]
 resource_name = "walk"
 length = 0.6
 tracks/0/type = "transform"
@@ -352,7 +352,7 @@ transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.
 [node name="arm_weapon" type="Spatial" parent="parts"]
 
 [node name="arm_bullet" parent="parts/arm_weapon" instance=ExtResource( 2 )]
-transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.0096292, -0.0189791, -0.794868, 0.22 )
+transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00716175, -0.0189791, -0.794868, 0.364405 )
 visible = false
 
 [node name="src" type="Spatial" parent="parts/arm_weapon/arm_bullet"]
@@ -396,10 +396,10 @@ visible = false
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.788196, 0 )
 
 [node name="die_leg_left" parent="parts/leg" instance=ExtResource( 19 )]
-transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
+transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.019, -0.795, -0.008 )
 
 [node name="die_leg_right" parent="parts/leg" instance=ExtResource( 20 )]
-transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
+transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189797, -0.792071, -0.0223921 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
@@ -460,7 +460,7 @@ reset_on_save = false
 anims/fire-bullet = SubResource( 5 )
 anims/fire-laser = SubResource( 7 )
 anims/jump = SubResource( 4 )
-anims/walk = SubResource( 5 )
+anims/walk = SubResource( 9 )
 
 [node name="WeaponSounds" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource( 6 )
