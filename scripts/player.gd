@@ -1,7 +1,7 @@
 extends KinematicBody
 
 var walk_speed: float = 6
-var roll_speed: float = 10
+var roll_speed: float = 12
 const AFTER_ROLL_DELAY: float = 0.1
 const fall_acceleration: float = 4.0
 const recover_time: float = 1.0
@@ -237,13 +237,13 @@ func roll(dir: Vector3):
 	var axis = dir.cross(Vector3.DOWN)
 	tween.interpolate_property(pivot, "transform:basis",
 			null, pivot.transform.basis.rotated(axis, PI/2),
-			1/roll_speed, Tween.TRANS_QUART, Tween.EASE_IN)
+			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
 	tween.interpolate_property(self, "translation",
 			null, self.translation + dir * 2,
-			1/roll_speed, Tween.TRANS_QUART, Tween.EASE_IN)
+			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
 	tween.interpolate_property(pivot, "translation",
 			null, pivot.translation - dir * 2,
-			1/roll_speed, Tween.TRANS_QUART, Tween.EASE_IN)
+			1/roll_speed, Tween.TRANS_QUAD, Tween.EASE_IN)
 	tween.start()
 	yield(tween, "tween_all_completed")
 	

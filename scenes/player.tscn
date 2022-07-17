@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/die_model/die_arm_bullet.gltf" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://assets/2.png" type="Texture" id=6]
 [ext_resource path="res://assets/6.png" type="Texture" id=7]
 [ext_resource path="res://res/anim/fire-laser.tres" type="Animation" id=8]
-[ext_resource path="res://scripts/light_flickering.gd" type="Script" id=9]
 [ext_resource path="res://res/anim/fire-bullet.tres" type="Animation" id=10]
 [ext_resource path="res://sounds/dice-hit.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/1.png" type="Texture" id=12]
@@ -21,6 +20,7 @@
 [ext_resource path="res://assets/die_model/die_leg_left.gltf" type="PackedScene" id=19]
 [ext_resource path="res://assets/die_model/die_leg_right.gltf" type="PackedScene" id=20]
 [ext_resource path="res://scripts/random-sound.gd" type="Script" id=21]
+[ext_resource path="res://sounds/fire-laser.wav" type="AudioStream" id=22]
 
 [sub_resource type="ArrayMesh" id=3]
 surfaces/0 = {
@@ -206,6 +206,9 @@ tracks/7/keys = {
 "times": PoolRealArray(  )
 }
 
+[sub_resource type="AudioStreamRandomPitch" id=6]
+audio_stream = ExtResource( 22 )
+
 [node name="Player" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -248,12 +251,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 190.231, 217.376, -204.44 )
 transform = Transform( 104.285, 0, 0, 0, 104.285, 0, 0, 0, 104.285, 191.28, 235.049, -429.672 )
 visible = false
 light_color = Color( 0.176471, 0.439216, 1, 1 )
-light_energy = 1.734
+light_energy = 3.055
 shadow_enabled = true
 omni_range = 44.275
-script = ExtResource( 9 )
-var_range = 0.5
-var_energy = 0.5
 
 [node name="arm_down" parent="parts/arm_weapon" instance=ExtResource( 13 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
@@ -332,12 +332,21 @@ anims/jump = SubResource( 4 )
 anims/walk = SubResource( 9 )
 
 [node name="WeaponSounds" type="AudioStreamPlayer3D" parent="."]
-stream = SubResource( 10 )
+stream = SubResource( 6 )
 unit_db = 9.897
 
 [node name="WeaponAnim" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Pivot")
+reset_on_save = false
 anims/fire-bullet = ExtResource( 10 )
 anims/fire-laser = ExtResource( 8 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 12.1232, -2.82524e-07 )
+light_color = Color( 0.219608, 0.937255, 0.156863, 1 )
+light_energy = 2.374
+light_specular = 1.087
+shadow_enabled = true
+spot_range = 20.0
 
 [connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]

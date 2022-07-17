@@ -44,6 +44,7 @@ transform = Transform( 2.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 centered = false
 offset = Vector2( 0, -40 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="Hrz" type="AnimatedSprite3D" parent="Vis"]
@@ -51,7 +52,7 @@ transform = Transform( 2.5, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0,
 centered = false
 offset = Vector2( 0, -40 )
 frames = SubResource( 1 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Vis"]
