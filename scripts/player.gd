@@ -124,9 +124,10 @@ func on_hit(_dmg: int, hit_dir: Vector3):
 func fire(type: String, color: Color = Color.red):
 	print("player-fire: ", type)
 	can_fire = false
+	var weapon_node: Spatial = get_node("parts/arm_weapon/arm_" + type)
 	
 	var src_pos = self.global_transform.origin
-	var src_node: Spatial = get_node("parts/arm_" + type + "/src")
+	var src_node = weapon_node.get_node("src")
 	if src_node != null:
 		src_pos = src_node.global_transform.origin
 	
@@ -174,7 +175,14 @@ func fire(type: String, color: Color = Color.red):
 				var from = src_pos
 #				var from = self.global_transform.origin
 				bullet.fire(from, from + this_dir, 40, false)
-				
+			
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play("fire-bullet")
+			
+#			$WeaponSounds.stream = load("res://sounds/fire-bullet.wav")
+#			$WeaponSounds.pitch_scale = rand_range(0.9, 1.1)
+#			$WeaponSounds.play()
+			
 			yield(get_tree().create_timer(0.2), "timeout")
 			can_fire = true
 		"bomb":

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/die_model/die_arm_bullet.gltf" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/4.png" type="Texture" id=5]
 [ext_resource path="res://assets/2.png" type="Texture" id=6]
 [ext_resource path="res://assets/6.png" type="Texture" id=7]
+[ext_resource path="res://sounds/fire-bullet.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/1.png" type="Texture" id=12]
 [ext_resource path="res://assets/die_model/die_arm_down.gltf" type="PackedScene" id=13]
 [ext_resource path="res://assets/die_model/die_arm_laser.gltf" type="PackedScene" id=14]
@@ -34,6 +35,100 @@ surfaces/0 = {
 [sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="BoxShape" id=2]
+
+[sub_resource type="AudioStreamRandomPitch" id=6]
+audio_stream = ExtResource( 8 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "fire-bullet"
+length = 0.4
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("../parts/arm_weapon/arm_bullet:translation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("../parts/arm_weapon/arm_bullet:translation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("../parts/arm_weapon/arm_bullet:translation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0.364405, -0.25, 0, 0.25, 0.25395, 0.22, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3875 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("../parts/arm_weapon/arm_bullet:scale:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("../parts/arm_weapon/arm_bullet:scale:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("../parts/arm_weapon/arm_bullet:scale:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( 0.00716175, -0.25, 0, 0.15, -0.000529923, 0.0096292, -0.1, -0.00119564, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../parts/arm_weapon/arm_bullet/flash:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/7/type = "audio"
+tracks/7/path = NodePath("../WeaponSounds")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": SubResource( 6 )
+} ],
+"times": PoolRealArray( 0 )
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "jump"
@@ -123,11 +218,18 @@ transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.
 [node name="arm_weapon" type="Spatial" parent="parts"]
 
 [node name="arm_bullet" parent="parts/arm_weapon" instance=ExtResource( 2 )]
-transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
+transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00716175, -0.0189791, -0.794868, 0.364405 )
 
 [node name="src" type="Spatial" parent="parts/arm_weapon/arm_bullet"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 178.16, 224.672, -409.69 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 164.056, 224.672, -245.917 )
 visible = false
+
+[node name="flash" type="OmniLight" parent="parts/arm_weapon/arm_bullet"]
+transform = Transform( 104.285, 0, 0, 0, 104.285, 0, 0, 0, 104.285, 165.569, 202.881, -361.77 )
+light_color = Color( 1, 0.929412, 0.176471, 1 )
+light_energy = 1.734
+shadow_enabled = true
+omni_range = 11.575
 
 [node name="arm_laser" parent="parts/arm_weapon" instance=ExtResource( 14 )]
 transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.0189791, -0.794868, -0.00788271 )
@@ -208,6 +310,11 @@ prefix = "sounds/step"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Pivot")
+reset_on_save = false
+anims/fire-bullet = SubResource( 5 )
 anims/jump = SubResource( 4 )
+
+[node name="WeaponSounds" type="AudioStreamPlayer3D" parent="."]
+unit_db = 9.897
 
 [connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]
