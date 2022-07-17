@@ -73,7 +73,7 @@ func fire_bullet(target: Vector3, speed: float):
 	
 	#var from = self.translation
 	var from = get_mesh_emission_src(current_type).global_transform.origin
-	from.y = 1.0
+#	from.y = 1.0
 	bullet.fire(from, target, speed, true) 
 
 func fire_mortier(target: Vector3, speed: float): 

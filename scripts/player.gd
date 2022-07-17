@@ -53,13 +53,13 @@ func _ready():
 	for weapon_id in weapon_data:
 		get_weapon_arm_mesh_from_id(weapon_id).visible = false
 
-	$parts/misc.translate(Vector3(0, STAND_UP_OFFSET, 0))
-	$parts/arm_weapon.translate(Vector3(0, STAND_UP_OFFSET, 0))
+#	$parts/misc.translate(Vector3(0, STAND_UP_OFFSET, 0))
+#	$parts/arm_weapon.translate(Vector3(0, STAND_UP_OFFSET, 0))
 
 	set_weapon_on_face(1, "laser")
 	set_weapon_on_face(2, "bullet")
 
-	deploy_die(Vector3.FORWARD)
+	deploy_die(Vector3.FORWARD, false)
 
 func _physics_process(delta):
 	if !can_move:
@@ -82,17 +82,21 @@ func _physics_process(delta):
 		var direction = Vector3.ZERO
 		if Input.is_action_pressed("move_right"):
 			direction.x += 1
-			$AnimationPlayer.play("walk")	
 		if Input.is_action_pressed("move_left"):
 			direction.x -= 1
-			$AnimationPlayer.play("walk")	
 		if Input.is_action_pressed("move_down"):
 			direction.z += 1
-			$AnimationPlayer.play("walk")	
 		if Input.is_action_pressed("move_up"):
 			direction.z -= 1
-			$AnimationPlayer.play("walk")	
-		direction = direction.normalized()		
+		
+		if direction != Vector3.ZERO:
+			direction = direction.normalized()
+			$AnimationPlayer.play("walk")
+		else:
+			if $AnimationPlayer.get_current_animation() == "walk":
+				var length = $AnimationPlayer.get_animation("walk").get_length()
+				$AnimationPlayer.seek(length)
+#				$AnimationPlayer.stop()
 		
 		current_speed.x = direction.x * walk_speed
 		current_speed.z = direction.z * walk_speed
