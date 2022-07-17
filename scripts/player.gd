@@ -66,7 +66,7 @@ func _ready():
 	set_weapon_on_face(4, "bullet_mono")
 
 	deploy_die(Vector3.FORWARD)
-	pivot.global_transform.origin.y = 0
+	pivot.global_transform.origin.y = STAND_UP_OFFSET
 
 func _physics_process(delta):
 	if !can_move:

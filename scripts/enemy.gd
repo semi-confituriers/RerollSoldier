@@ -115,7 +115,7 @@ func set_enemy_type(enemy_type_id):
 	current_type = enemy_type_id
 	
 func get_mesh_by_enemy_type(enemy_type_id):
- 	var node_name = mob_data[enemy_type_id]["mesh"]
+	var node_name = mob_data[enemy_type_id]["mesh"]
 	return $enemy_meshes.get_node(node_name)
 
 func get_mesh_emission_src(enemy_type_id):
