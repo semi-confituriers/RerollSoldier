@@ -206,7 +206,17 @@ func fire(type: String, color: Color = Color.red):
 			yield(get_tree().create_timer(0.2), "timeout")
 			can_fire = true
 		"bullet_mono":
-			print("nonn")
+			var dir = current_dir
+			var bullet: Spatial = load("res://scenes/bullet.tscn").instance()
+			get_node("/root/Game/LevelCont/Level").add_child(bullet)
+			var from = src_pos
+			bullet.fire(from, from + dir, 40, false)
+			$WeaponAnim.stop()
+			$WeaponAnim.play("fire-bullet")
+			self.move_and_collide(-current_dir)
+			yield(get_tree().create_timer(0.2), "timeout")
+			can_fire = true
+
 		"bomb":
 #			var dir = Vector3.FORWARD # TODO: use model otientation
 #			var target = self.translation + dir * 5.0
