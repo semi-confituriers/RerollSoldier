@@ -35,7 +35,7 @@ func _process(delta):
 	pos.x += dest_vector.x * percent
 	pos.z += dest_vector.z * percent
 	
-	pos.y += (1.0 - pow(2 * percent - 1, 2)) * 5
+	pos.y += (1.0 - pow(2 * percent - 1, 2)) * 5 + (-dest_vector.y)
 	
 	mesh.global_transform.origin = pos
 	

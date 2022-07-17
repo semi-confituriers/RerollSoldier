@@ -65,7 +65,8 @@ func _ready():
 	set_weapon_on_face(3, "bullet_mono")
 	set_weapon_on_face(4, "bullet_mono")
 
-	deploy_die(Vector3.FORWARD, false)
+	deploy_die(Vector3.FORWARD)
+	pivot.global_transform.origin.y = 0
 
 func _physics_process(delta):
 	if !can_move:
@@ -329,7 +330,7 @@ func get_current_weapon_emission_source():
 func is_rolling(): 
 	return tween.is_active()
 
-func deploy_die(dir, raise: bool = true):
+func deploy_die(dir: Vector3):
 	
 	var angle = Vector3.FORWARD.signed_angle_to(dir, Vector3.UP)
 
@@ -337,8 +338,7 @@ func deploy_die(dir, raise: bool = true):
 	$parts.rotate_y(angle)
 
 	leg.visible = true
-	if raise:
-		pivot.translate(Vector3(0, STAND_UP_OFFSET, 0))
+	pivot.global_transform.origin.y = STAND_UP_OFFSET
 	current_weapon = weapon_by_face[get_current_up_face()]
 	current_arm_mesh = get_weapon_arm_mesh_from_id(current_weapon)
 	current_arm_mesh.visible = true
@@ -391,7 +391,7 @@ func throw_up(invuln_time: float):
 
 	deploy_counter -= 1
 	if deploy_counter == 0:
-		deploy_die(deploy_dir, false)
+		deploy_die(deploy_dir)
 	
 	self.can_move = true
 	yield(get_tree().create_timer(invuln_time), "timeout")
