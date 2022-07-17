@@ -213,6 +213,7 @@ visible = false
 
 [node name="flash" type="OmniLight" parent="parts/arm_weapon/arm_bullet"]
 transform = Transform( 104.285, 0, 0, 0, 104.285, 0, 0, 0, 104.285, 165.569, 202.881, -361.77 )
+visible = false
 light_color = Color( 1, 0.929412, 0.176471, 1 )
 light_energy = 1.734
 shadow_enabled = true

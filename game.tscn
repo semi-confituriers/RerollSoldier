@@ -21,18 +21,21 @@ margin_bottom = 57.8381
 [node name="Prev" type="Button" parent="Gui/LevelBox"]
 margin_right = 28.0
 margin_bottom = 40.0
+focus_mode = 0
 text = "<<"
 
 [node name="Restart" type="Button" parent="Gui/LevelBox"]
 margin_left = 32.0
 margin_right = 89.0
 margin_bottom = 40.0
+focus_mode = 0
 text = "Restart"
 
 [node name="Next" type="Button" parent="Gui/LevelBox"]
 margin_left = 93.0
 margin_right = 121.0
 margin_bottom = 40.0
+focus_mode = 0
 text = ">>"
 
 [node name="Level" type="Label" parent="Gui/LevelBox"]
@@ -50,8 +53,8 @@ margin_right = 261.0
 margin_bottom = 138.0
 rect_scale = Vector2( 1.5, 1.5 )
 text = "Kill all enemies
-Move with direction keys
-Roll by pressing CTRL, ALT or right click
+Move with direction keys or WASD
+Roll by pressing ALT or CTRL or right click
 Shoot with SPACE or left click"
 
 [node name="Hearts" type="HBoxContainer" parent="Gui"]
