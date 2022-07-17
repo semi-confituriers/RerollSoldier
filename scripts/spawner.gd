@@ -1,19 +1,23 @@
 extends Node
 
 export var mob_list = [
-	[1.0, [ [3, "red"], [1, "blue"] ] ],
-	[5.0, [ [5, "red"] ] ],
+	[1.0, [ [1, "shooter"], [1, "shooter"] ] ],
+	[5.0, [ [1, "bomber"] ] ],
+	[10, [ [2, "bomber"], [1, "bomber"], [3, "shooter"]] ],
 ]
 export var disabled: bool = false
 
+var mob_scene = load("res://scenes/enemy.tscn")
+
 var mob_config = {
 	"red": {
-		"scene": "res://scenes/enemy.tscn"
+		"scene": "res://scenes/enemy.tscn",
 	},
 	"blue": {
 		"scene": "res://scenes/enemy.tscn"
 	},
 }
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,21 +38,19 @@ func spawn():
 			var cnt = to_spawn[0]
 			var mob_type = to_spawn[1]
 			
-			var mob_scene = load(mob_config[mob_type]["scene"])
-			
+	
 			for _i in range(0, cnt):
 				var spawn_point = spawn_points[randi() % spawn_points.size()]
 				
 				var mob = mob_scene.instance()
+				mob.set_enemy_type(mob_type)
+				
 				get_node("/root/Game/LevelCont/Level/Enemies").add_child(mob)
+				
 				mob.set_translation(
 					spawn_point.get_translation()
 					 + Vector3(rand_range(-1, 1), 0, rand_range(-1, 1))
 				)
-				
-			
-			
-			
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

@@ -26,7 +26,7 @@ var default_type = "shooter"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_enemy_type(default_type)
+	#set_enemy_type(default_type)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,10 +35,10 @@ func _process(delta):
 	cnt += delta
 	if cnt > next_cnt:
 		random_move()
-		match current_type: 
+		match current_type:
 			"shooter":
 				fire_bullet(player.translation, 15)
-			"bomber": 
+			"bomber":
 				fire_mortier(player.translation, 2)
 		cnt = 0
 		next_cnt = rand_range(3, 4)
@@ -74,9 +74,9 @@ func fire_bullet(target: Vector3, speed: float):
 	#var from = self.translation
 	var from = get_mesh_emission_src(current_type).global_transform.origin
 #	from.y = 1.0
-	bullet.fire(from, target, speed, true, "red") 
+	bullet.fire(from, target, speed, true, "red")
 
-func fire_mortier(target: Vector3, speed: float): 
+func fire_mortier(target: Vector3, speed: float):
 	var mortier = load("res://scenes/mortier.tscn").instance()
 	get_node("/root/Game/LevelCont/Level").add_child(mortier)
 
@@ -103,17 +103,18 @@ func on_hit(dmg: int, hit_dir: Vector3):
 		yield($DeathSound, "finished")
 		self.queue_free()
 	
-func set_enemy_type(enemy_type_id): 
+func set_enemy_type(enemy_type_id):
+	print(enemy_type_id)
 	if current_type != null:
 		get_mesh_by_enemy_type(current_type).visible = false
 	get_mesh_by_enemy_type(enemy_type_id).visible = true
 	current_type = enemy_type_id
 	
-func get_mesh_by_enemy_type(enemy_type_id): 
+func get_mesh_by_enemy_type(enemy_type_id):
 	var node_name = mob_data[enemy_type_id]["mesh"]
 	return $enemy_meshes.get_node(node_name)
 
-func get_mesh_emission_src(enemy_type_id): 
+func get_mesh_emission_src(enemy_type_id):
 	var node_name = mob_data[enemy_type_id]["mesh"]
 	var node = $enemy_meshes.get_node(node_name)
 	return node.get_node("src")
