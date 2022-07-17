@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://assets/die_model/die_arm_bullet.gltf" type="PackedScene" id=2]
@@ -22,6 +22,8 @@
 [ext_resource path="res://assets/die_model/die_leg_right.gltf" type="PackedScene" id=20]
 [ext_resource path="res://scripts/random-sound.gd" type="Script" id=21]
 [ext_resource path="res://sounds/fire-laser.wav" type="AudioStream" id=22]
+[ext_resource path="res://sounds/enemy_death.wav" type="AudioStream" id=23]
+[ext_resource path="res://sounds/bomb.wav" type="AudioStream" id=24]
 
 [sub_resource type="ArrayMesh" id=3]
 surfaces/0 = {
@@ -161,6 +163,12 @@ tracks/1/keys = {
 [sub_resource type="AudioStreamRandomPitch" id=6]
 audio_stream = ExtResource( 22 )
 
+[sub_resource type="AudioStreamRandomPitch" id=11]
+audio_stream = ExtResource( 23 )
+
+[sub_resource type="AudioStreamRandomPitch" id=12]
+audio_stream = ExtResource( 24 )
+
 [node name="Player" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 1 )
@@ -246,7 +254,7 @@ transform = Transform( 0.00958911, 0, 0, 0, 0.00958911, 0, 0, 0, 0.00958911, -0.
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="MeshInstance" type="MeshInstance" parent="Pivot"]
-transform = Transform( 1.00076, 0, 0, 0, 1.00076, 0, 0, 0, 1.00076, 0, 1.70342, 0 )
+transform = Transform( 1.00076, 0, 0, 0, 1.00076, 0, 0, 0, 1.00076, 0, 1, 0 )
 mesh = SubResource( 3 )
 skeleton = NodePath("../../..")
 material/0 = null
@@ -319,5 +327,13 @@ light_energy = 2.374
 light_specular = 1.087
 shadow_enabled = true
 spot_range = 20.0
+
+[node name="DeathSound" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource( 11 )
+unit_db = 14.159
+
+[node name="BombSound" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource( 12 )
+unit_db = -0.001
 
 [connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]
