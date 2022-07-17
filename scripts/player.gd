@@ -6,7 +6,6 @@ const AFTER_ROLL_DELAY: float = 0.1
 const fall_acceleration: float = 4.0
 const recover_time: float = 1.0
 
-
 var weapon_data = {
 	"laser": {
 		"texture_name": "label_blue.png",
