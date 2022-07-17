@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://res/floor.tres" type="Material" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/spawner.gd" type="Script" id=4]
 [ext_resource path="res://scenes/camera.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/wood.jpg" type="Texture" id=6]
+[ext_resource path="res://scenes/SpawnPoint.tscn" type="PackedScene" id=7]
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 30, 2, 20 )
@@ -104,16 +105,23 @@ script = ExtResource( 4 )
 
 [node name="SpawnPoints" type="Node" parent="Spawner"]
 
-[node name="Spatial3" type="Spatial" parent="Spawner/SpawnPoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.143, 1.90735e-06, 15.2302 )
+[node name="Spatial3" parent="Spawner/SpawnPoints" instance=ExtResource( 7 )]
+transform = Transform( 0.902164, 0, 0.431393, 0, 1, 0, -0.431393, 0, 0.902164, 25.4032, 0, -14.3215 )
 
-[node name="Spatial2" type="Spatial" parent="Spawner/SpawnPoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2583, 3.8147e-06, -14.1597 )
+[node name="Spatial4" parent="Spawner/SpawnPoints" instance=ExtResource( 7 )]
+transform = Transform( 0.696226, 0, -0.717823, 0, 1, 0, 0.717823, 0, 0.696226, 23.8485, 0, 13.9479 )
 
-[node name="Spatial" type="Spatial" parent="Spawner/SpawnPoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8388, 0, -14.9398 )
+[node name="Spatial5" parent="Spawner/SpawnPoints" instance=ExtResource( 7 )]
+transform = Transform( -0.728479, 0, -0.685069, 0, 1, 0, 0.685069, 0, -0.728479, 7.71915, 0, -12.3898 )
+
+[node name="Spatial6" parent="Spawner/SpawnPoints" instance=ExtResource( 7 )]
+transform = Transform( 0.70739, 0, -0.706823, 0, 1, 0, 0.706823, 0, 0.70739, -26.2302, 0, -9.33914 )
+
+[node name="Spatial7" parent="Spawner/SpawnPoints" instance=ExtResource( 7 )]
+transform = Transform( 0.88697, 0, 0.461826, 0, 1, 0, -0.461826, 0, 0.88697, -13.4086, 0, -15.1614 )
 
 [node name="CameraNode(config_only)" parent="." instance=ExtResource( 5 )]
+visible = false
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.728735, 0.671497, 0.134302, -0.510975, 0.402635, 0.759466, 0.455905, -0.622075, 0.636533, -8.3108, 8.737, 2.92213 )
