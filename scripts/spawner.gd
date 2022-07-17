@@ -3,12 +3,14 @@ extends Node
 export var mob_list = [
 	[1.0, [ [1, "shooter"], [1, "shooter"] ] ],
 	[5.0, [ [1, "bomber"] ] ],
-	[10, [ [2, "bomber"], [1, "bomber"], [1, "shooter"]] ],
+	[10, [ [2, "bomber"], [1, "bomber"], [3, "shooter"]] ],
 	[20, [ [2, "bomber"], [1, "bomber"], [1, "shooter"]] ],
 	[30, [ [2, "shooter"], [1, "shooter"], [1, "shooter"]] ],
 	[40, [ [2, "bomber"], [1, "shooter"], [1, "shooter"]] ],
+	[50, [ [2, "bomber"], [3, "shooter"], [1, "shooter"]] ],
 	[60, [ [2, "bomber"], [3, "shooter"], [1, "shooter"]] ],
 	[80, [ [1, "shooter"], [3, "shooter"], [1, "shooter"]] ],
+	[90, [ [3, "shooter"], [3, "shooter"], [1, "shooter"]] ],
 	[100, [ [4, "bomber"], [1, "bomber"], [1, "bomber"]] ],
 	[120, [ [3, "shooter"], [5, "shooter"], [4, "bomber"]] ],
 ]
