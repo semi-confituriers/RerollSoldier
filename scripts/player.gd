@@ -84,13 +84,17 @@ func _physics_process(delta):
 		var direction = Vector3.ZERO
 		if Input.is_action_pressed("move_right"):
 			direction.x += 1
+			$AnimationPlayer.play("walk")	
 		if Input.is_action_pressed("move_left"):
 			direction.x -= 1
+			$AnimationPlayer.play("walk")	
 		if Input.is_action_pressed("move_down"):
 			direction.z += 1
+			$AnimationPlayer.play("walk")	
 		if Input.is_action_pressed("move_up"):
 			direction.z -= 1
-		direction = direction.normalized()	
+			$AnimationPlayer.play("walk")	
+		direction = direction.normalized()		
 		
 		current_speed.x = direction.x * walk_speed
 		current_speed.z = direction.z * walk_speed
