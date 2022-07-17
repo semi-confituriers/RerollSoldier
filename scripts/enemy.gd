@@ -67,7 +67,6 @@ func random_move():
 	moving_to.y = 0
 
 func fire_bullet(target: Vector3, speed: float):
-#	print("enemy-fire: ", self.translation, "->", target)
 	var bullet = load("res://scenes/bullet.tscn").instance()
 	get_node("/root/Game/LevelCont/Level").add_child(bullet)
 	
@@ -108,14 +107,13 @@ func on_hit(dmg: int, hit_dir: Vector3):
 		self.queue_free()
 	
 func set_enemy_type(enemy_type_id):
-	print(enemy_type_id)
 	if current_type != null:
 		get_mesh_by_enemy_type(current_type).visible = false
 	get_mesh_by_enemy_type(enemy_type_id).visible = true
 	current_type = enemy_type_id
 	
 func get_mesh_by_enemy_type(enemy_type_id):
- 	var node_name = mob_data[enemy_type_id]["mesh"]
+	var node_name = mob_data[enemy_type_id]["mesh"]
 	return $enemy_meshes.get_node(node_name)
 
 func get_mesh_emission_src(enemy_type_id):

@@ -7,14 +7,15 @@ export var mob_list = [
 	[20, [ [2, "bomber"], [1, "bomber"], [1, "shooter"]] ],
 	[30, [ [2, "shooter"], [1, "shooter"], [1, "shooter"]] ],
 	[40, [ [2, "bomber"], [1, "shooter"], [1, "shooter"]] ],
-	[60, [ [1, "bomber"], [1, "shooter"], [1, "shooter"]] ],
-	[80, [ [1, "shooter"], [1, "shooter"], [1, "shooter"]] ],
-	[100, [ [1, "bomber"], [1, "bomber"], [1, "bomber"]] ],
-	[120, [ [2, "shooter"], [1, "shooter"], [1, "bomber"]] ],
+	[60, [ [2, "bomber"], [3, "shooter"], [1, "shooter"]] ],
+	[80, [ [1, "shooter"], [3, "shooter"], [1, "shooter"]] ],
+	[100, [ [4, "bomber"], [1, "bomber"], [1, "bomber"]] ],
+	[120, [ [3, "shooter"], [5, "shooter"], [4, "bomber"]] ],
 ]
 export var disabled: bool = false
 
 var mob_scene = load("res://scenes/enemy.tscn")
+var spawn_finished = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,6 +49,19 @@ func spawn():
 					spawn_point.get_translation()
 					 + Vector3(rand_range(-1, 1), 0, rand_range(-1, 1))
 				)
+	spawn_finished = true
+
+func _process(delta):
+	print(is_level_finished())
+	pass
+
+func is_level_finished():
+	if not spawn_finished:
+		return false	
+	if len(get_node("/root/Game/LevelCont/Level/Enemies").get_children()) == 0:
+		return true
+	else:
+		return false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
