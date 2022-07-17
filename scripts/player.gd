@@ -2,7 +2,8 @@ extends KinematicBody
 
 var walk_speed: float = 6
 var roll_speed: float = 10
-const AFTER_ROLL_DELAY: float = 0.3
+const AFTER_ROLL_DELAY: float = 0.1
+const fall_acceleration: float = 4.0
 
 
 var weapon_data = {
@@ -25,7 +26,9 @@ onready var leg = $parts/leg
 
 const STAND_UP_OFFSET = 0.7
 
-var roll_counter = 0
+var deploy_counter = 0
+var invincible = false
+var can_move = true
 
 var current_weapon = null
 var current_arm_mesh = null
@@ -59,18 +62,22 @@ func _ready():
 
 	deploy_die(Vector3.FORWARD)
 
-func _physics_process(delta):		
+func _physics_process(delta):
+	if !can_move:
+		return
+		
 	if Input.is_action_pressed("crouch"):
-		# Roll on a sides
-		var forward = Vector3.FORWARD
-		if Input.is_action_pressed("move_up"):
-			roll(forward)
-		elif Input.is_action_pressed("move_down"):
-			roll(-forward)
-		elif Input.is_action_pressed("move_right"):
-			roll(forward.cross(Vector3.UP))
-		elif Input.is_action_pressed("move_left"):
-			roll(-forward.cross(Vector3.UP))
+		if can_move:
+			# Roll on a sides
+			var forward = Vector3.FORWARD
+			if Input.is_action_pressed("move_up"):
+				roll(forward)
+			elif Input.is_action_pressed("move_down"):
+				roll(-forward)
+			elif Input.is_action_pressed("move_right"):
+				roll(forward.cross(Vector3.UP))
+			elif Input.is_action_pressed("move_left"):
+				roll(-forward.cross(Vector3.UP))
 	elif leg.visible:
 		# Slow and precise
 		var direction = Vector3.ZERO
@@ -86,7 +93,7 @@ func _physics_process(delta):
 		
 		current_speed.x = direction.x * walk_speed
 		current_speed.z = direction.z * walk_speed
-	#	current_speed.y -= fall_acceleration * delta
+		current_speed.y -= fall_acceleration * delta
 		
 		# Moving the character
 		current_speed = move_and_slide(current_speed, Vector3.UP)
@@ -96,18 +103,27 @@ func _physics_process(delta):
 			var weapon = weapon_by_face[get_current_up_face()]
 			if weapon != null :
 				fire(weapon)
-				can_fire = false
-				yield(get_tree().create_timer(0.5), "timeout")
-				can_fire = true
 
 # Called by bullet.gd
 func on_hit(_dmg: int, hit_dir: Vector3):
+	if self.invincible:
+		return
+		
+	if is_rolling():
+#		can_move = false
+		yield(tween, "tween_all_completed")
+#		yield(get_tree().create_timer(0.2), "timeout")
+#		can_move = true
+		
 	var game = get_node("/root/Game")
 	game.camera.bump(hit_dir)
 	game.camera.kick_out()
 	
+	throw_up(0.5)
+	
 func fire(type: String, color: Color = Color.red):
 	print("player-fire: ", type)
+	can_fire = false
 	
 	var src_pos = self.global_transform.origin
 	var src_node: Spatial = get_node("parts/arm_" + type + "/src")
@@ -140,6 +156,9 @@ func fire(type: String, color: Color = Color.red):
 			yield(get_tree().create_timer(0.2), "timeout")
 			for node in beams:
 				node.queue_free()
+				
+			yield(get_tree().create_timer(0.5), "timeout")
+			can_fire = true
 		"bullet":
 			for i in range(0, 3):
 				
@@ -156,6 +175,8 @@ func fire(type: String, color: Color = Color.red):
 #				var from = self.global_transform.origin
 				bullet.fire(from, from + this_dir, 40, false)
 				
+			yield(get_tree().create_timer(0.2), "timeout")
+			can_fire = true
 		"bomb":
 #			var dir = Vector3.FORWARD # TODO: use model otientation
 #			var target = self.translation + dir * 5.0
@@ -166,8 +187,12 @@ func fire(type: String, color: Color = Color.red):
 			aoe.translation = self.translation
 			aoe.configure(4, 1, Color.blue, false);
 			
+			yield(get_tree().create_timer(2), "timeout")
+			can_fire = true
+			
 		_:
 			printerr("No attack type ", type)
+			can_fire = true
 			
 
 func boum(): 
@@ -190,7 +215,7 @@ func roll(dir: Vector3):
 	pivot.translate(dir)
 	mesh.global_translate(-dir)
 
-	roll_counter += 1
+	deploy_counter += 1
 	
 	## Step 2: Animate the rotation
 	var axis = dir.cross(Vector3.DOWN)
@@ -218,8 +243,8 @@ func roll(dir: Vector3):
 	current_dir = -dir
 	
 	yield(get_tree().create_timer(AFTER_ROLL_DELAY), "timeout")
-	roll_counter -= 1
-	if roll_counter == 0:
+	deploy_counter -= 1
+	if deploy_counter == 0:
 		deploy_die(current_dir)
 
 func get_current_up_face(): 
@@ -263,7 +288,7 @@ func get_current_weapon_emission_source():
 func is_rolling(): 
 	return tween.is_active()
 
-func deploy_die(dir):
+func deploy_die(dir, raise: bool = true):
 	
 	var angle = Vector3.FORWARD.signed_angle_to(dir, Vector3.UP)
 
@@ -271,7 +296,8 @@ func deploy_die(dir):
 	$parts.rotate_y(angle)
 
 	leg.visible = true
-	pivot.translate(Vector3(0, STAND_UP_OFFSET, 0))
+	if raise:
+		pivot.translate(Vector3(0, STAND_UP_OFFSET, 0))
 	current_weapon = weapon_by_face[get_current_up_face()]
 	current_arm_mesh = get_weapon_arm_mesh_from_id(current_weapon)
 	current_arm_mesh.visible = true
@@ -282,5 +308,47 @@ func retract_die():
 	leg.visible = false
 	current_arm_mesh.visible = false
 	$parts/misc.visible = false
-	pass
+	
+
+func throw_up(invuln_time: float):
+	self.invincible = true
+	self.can_move = false
+	deploy_counter += 1
+	
+	retract_die()
+	$AnimationPlayer.play("jump")
+	var saved_pivot_transform = pivot.transform;
+	
+	var saved_collision_layer = self.collision_layer
+	self.collision_layer = 0
+	
+	yield($AnimationPlayer, "animation_finished")
+	
+	
+	var deploy_dir;
+	match randi() % 4:
+		0: deploy_dir = Vector3.FORWARD
+		1: deploy_dir = Vector3.RIGHT
+		2: deploy_dir = Vector3.BACK
+		3: deploy_dir = Vector3.LEFT
+		
+	match randi() % 6:
+		0: mesh.global_transform.basis = pivot.transform.basis.rotated(Vector3.FORWARD, 0)
+		1: mesh.global_transform.basis = pivot.transform.basis.rotated(Vector3.FORWARD, PI/2)
+		2: mesh.global_transform.basis = pivot.transform.basis.rotated(Vector3.FORWARD, -PI/2)
+		3: mesh.global_transform.basis = pivot.transform.basis.rotated(Vector3.FORWARD, PI)
+		4: mesh.global_transform.basis = pivot.transform.basis.rotated(Vector3.LEFT, PI/2)
+		5: mesh.global_transform.basis = pivot.transform.basis.rotated(Vector3.LEFT, -PI/2)
+
+	deploy_counter -= 1
+	if deploy_counter == 0:
+		deploy_die(deploy_dir, false)
+	
+	self.can_move = true
+	yield(get_tree().create_timer(invuln_time), "timeout")
+	
+	self.collision_layer = saved_collision_layer
+	self.invincible = false
+	
+	
 	

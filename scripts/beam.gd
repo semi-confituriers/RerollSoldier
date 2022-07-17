@@ -22,5 +22,4 @@ func set_color(color: Color):
 func _on_beam_hit(body):
 	print("beam hit ", body)
 	if body.get_parent().name == "Enemies":
-#	if body.name == "Enemy":
-		body.queue_free()
+		body.on_hit(2, Vector3.ZERO)

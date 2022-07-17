@@ -7,6 +7,8 @@ var randwalk_dist: float = 20
 var can_fire = true
 export var hitpoints = 2
 
+onready var orig_scale = self.scale
+
 enum MobType {
 	Shooter, # Walks randomly, shoots bullets
 	Bull, # Moves towards the player, hits on collision
@@ -86,9 +88,14 @@ func fire_bullet(target: Vector3, speed: float):
 # Called by bullet.gd
 func on_hit(dmg: int, _hit_dir: Vector3):
 	
+	
+	self.scale = Vector3(0.8, 0.8, 0.8)
+	
 	hitpoints -= dmg
 	if hitpoints > 0:
 		$HitSound.play()
+		yield(get_tree().create_timer(0.4), "timeout")
+		self.scale = orig_scale
 	else:
 		$DeathSound.play()
 		self.hide()
